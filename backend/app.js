@@ -16,19 +16,19 @@ app.use("/", indexRouter);
 
 const schema = buildSchema(`
   type Archipelago {
-    id: ID
+    id: Int
     name: String
     islands : [Island]
   }
   type Island {
-    id: ID
+    id: Int
     name: String
     nativeFruit: String
     turnipPrices: [TurnipPrice]
     islanders : [Islander]
   }
   type Islander {
-    id: ID
+    id: Int
     name: String
   }
   type TurnipPrice{
@@ -36,24 +36,59 @@ const schema = buildSchema(`
     price: Int
   }
   type Query {
-    hello: String
-    archipelago: Archipelago
-    islander: Islander
-    island: Island
+    archipelagos: [Archipelago]
+    archipelago(id: Int!): Archipelago
+    islands: [Island]
+    island(id: Int!): Island
+    islanders: [Islander]
+    islander(id: Int!): Islander
   }
 `);
-var root = {
-	hello: () => {
-		return "Hello world!";
+
+const archipelagos = [
+	{ id: 1, name: "Covidian Montréal Consortium" },
+	{ id: 2, name: "Secret Group of Destiny" },
+];
+const islands = [
+	{ id: 1, name: "Raftel", nativeFruit: "Peaches", archipelago_id: 1 },
+	{ id: 2, name: "Montoya", nativeFruit: "Apples", archipelago_id: 1 },
+];
+const islanders = [
+	{ id: 1, name: "Francis", island_id: 1 },
+	{ id: 2, name: "Riki", island_id: 2 },
+	{ id: 3, name: "Corrina", island_id: 1 },
+];
+const root = {
+	archipelagos: () => {
+		return archipelagos;
 	},
-	archipelago: () => {
-		return { id: 1, name: "Covidian Montréal Consortium" };
+	archipelago: ({ id }) => {
+		console.log("archipelago", id);
+		const archipelago = archipelagos.find(
+			(archipelago) => archipelago.id === id
+		);
+		archipelago.islands = islands.filter(
+			(island) => island.archipelago_id === id
+		);
+		return archipelago;
 	},
-	island: () => {
-		return { id: 1, name: "Raftel", nativeFruit: "Peaches" };
+	islands: () => {
+		return islands;
 	},
-	islander: () => {
-		return { id: 1, name: "Francis" };
+	island: ({ id }) => {
+		console.log("island", id);
+		const island = islands.find((island) => island.id === id);
+		island.islanders = islanders.filter(
+			(islander) => islander.island_id === id
+		);
+		return island;
+	},
+	islanders: () => {
+		return islanders;
+	},
+	islander: ({ id }) => {
+		console.log("islander", id);
+		return islanders.find((islander) => islander.id === id);
 	},
 };
 
