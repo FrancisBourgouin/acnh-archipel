@@ -3,7 +3,7 @@ const schemaData = `
 Archipelago info (id, name, [islands]), searchable by archipelagoId or islanderId
 """
 type Archipelago {
-  id: Int
+  id: ID
   name: String
   islands : [Island]
 }
@@ -11,7 +11,7 @@ type Archipelago {
 Island info ( id, name, nativeFruit, turnipPrice, [islanders]), searchable by islandId
 """
 type Island {
-  id: Int
+  id: ID
   name: String
   nativeFruit: String
   turnipPrices: [TurnipPrice]
@@ -21,13 +21,14 @@ type Island {
 Islander info ( id, name), searchable by islanderId
 """
 type Islander {
-  id: Int
+  id: ID
   name: String
 }
 """
 Turnip price info ( id, name), searchable by turnipId
 """
 type TurnipPrice{
+  id: ID
   date: String
   islander_id: Int
   price: Int
@@ -39,6 +40,11 @@ type Query {
   island(id: Int!): Island
   islanders: [Islander]
   islander(id: Int!): Islander
+}
+type Mutation {
+  createArchipelago(name: String!): Archipelago
+  createIsland(name: String!, nativeFruit: String!, archipelagoId: Int!): Island
+  createIslander(name: String!, islandId: Int!): Islander
 }
 `;
 export default schemaData;

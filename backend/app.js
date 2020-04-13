@@ -4,13 +4,18 @@ import { buildSchema } from "graphql";
 import logger from "morgan";
 import path from "path";
 import {
+	createArchipelago,
+	createIsland,
+	createIslander,
+} from "./helpers/mutation_resolvers";
+import {
 	fetchArchipelagoInfo,
 	fetchArchipelagos,
 	fetchIslanderInfo,
 	fetchIslanders,
 	fetchIslandInfo,
 	fetchIslands,
-} from "./helpers/resolvers";
+} from "./helpers/query_resolvers";
 import schemaData from "./helpers/schema";
 import indexRouter from "./routes/index";
 
@@ -25,7 +30,7 @@ app.use("/", indexRouter);
 
 const schema = buildSchema(schemaData);
 
-const root = {
+const query_resolvers = {
 	archipelagos: fetchArchipelagos,
 	archipelago: fetchArchipelagoInfo,
 	islands: fetchIslands,
@@ -34,6 +39,16 @@ const root = {
 	islander: fetchIslanderInfo,
 };
 
+const mutation_resolvers = {
+	createArchipelago: createArchipelago,
+	createIsland: createIsland,
+	createIslander: createIslander,
+};
+const root = {
+	...query_resolvers,
+	...mutation_resolvers,
+};
+console.log(root);
 app.use(
 	"/graphql",
 	graphqlHTTP({
