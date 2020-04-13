@@ -3,6 +3,15 @@ import graphqlHTTP from "express-graphql";
 import { buildSchema } from "graphql";
 import logger from "morgan";
 import path from "path";
+import {
+	fetchArchipelagoInfo,
+	fetchArchipelagos,
+	fetchIslanderInfo,
+	fetchIslanders,
+	fetchIslandInfo,
+	fetchIslands,
+} from "./helpers/resolvers";
+import schemaData from "./helpers/schema";
 import indexRouter from "./routes/index";
 
 const app = express();
@@ -14,117 +23,15 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 
-const schema = buildSchema(`
-  type Archipelago {
-    id: Int
-    name: String
-    islands : [Island]
-  }
-  type Island {
-    id: Int
-    name: String
-    nativeFruit: String
-    turnipPrices: [TurnipPrice]
-    islanders : [Islander]
-  }
-  type Islander {
-    id: Int
-    name: String
-  }
-  type TurnipPrice{
-    date: String
-    price: Int
-  }
-  type Query {
-    archipelagos: [Archipelago]
-    archipelago(archipelagoId: Int, islanderId: Int): Archipelago
-    islands: [Island]
-    island(id: Int!): Island
-    islanders: [Islander]
-    islander(id: Int!): Islander
-  }
-`);
-
-const archipelagos = [
-	{ id: 1, name: "Covidian Montréal Consortium" },
-	{ id: 2, name: "Secret Group of Destiny" },
-];
-const islands = [
-	{ id: 1, name: "Raftel", nativeFruit: "Peaches", archipelago_id: 1 },
-	{ id: 2, name: "Montoya", nativeFruit: "Apples", archipelago_id: 1 },
-	{ id: 3, name: "Syracuse", nativeFruit: "Oranges", archipelago_id: 2 },
-];
-const islanders = [
-	{ id: 1, name: "Francis", island_id: 1 },
-	{ id: 2, name: "Riki", island_id: 2 },
-	{ id: 3, name: "Corrina", island_id: 1 },
-	{ id: 4, name: "Bawb", island_id: 3 },
-];
-
-const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
-	if (archipelagoId) {
-		const archipelago = archipelagos.find(
-			(archipelago) => archipelago.id === archipelagoId
-		);
-		if (archipelago) {
-			archipelago.islands = islands
-				.filter((island) => island.archipelago_id === archipelagoId)
-				.map((island) => ({
-					...island,
-					islanders: islanders.filter(
-						(islander) => islander.island_id === island.id
-					),
-				}));
-			return archipelago;
-		}
-	}
-
-	if (islanderId) {
-		const islander = islanders.find((islander) => islander.id === islanderId);
-		const island = islands.find((island) => island.id === islander.island_id);
-		const archipelago = archipelagos.find(
-			(archipelago) => archipelago.id === island.archipelago_id
-		);
-		if (archipelago) {
-			archipelago.islands = islands
-				.filter((island) => island.archipelago_id === archipelago.id)
-				.map((island) => ({
-					...island,
-					islanders: islanders.filter(
-						(islander) => islander.island_id === island.id
-					),
-				}));
-			console.log(archipelago.islands);
-			return archipelago;
-		}
-	}
-};
+const schema = buildSchema(schemaData);
 
 const root = {
-	archipelagos: () => {
-		return archipelagos.map((archipelago) =>
-			fetchArchipelagoInfo({ archipelagoId: archipelago.id })
-		);
-	},
+	archipelagos: fetchArchipelagos,
 	archipelago: fetchArchipelagoInfo,
-	islands: () => {
-		return islands;
-	},
-	island: ({ id }) => {
-		console.log("island", id);
-		const island = islands.find((island) => island.id === id);
-		island.islanders = islanders.filter(
-			(islander) => islander.island_id === id
-		);
-		return island;
-	},
-	islanders: () => {
-		return islanders;
-	},
-	islander: ({ id }) => {
-		console.log("islander", id);
-		return islanders.find((islander) => islander.id === id);
-	},
+	islands: fetchIslands,
+	island: fetchIslandInfo,
+	islanders: fetchIslanders,
+	islander: fetchIslanderInfo,
 };
 
 app.use(
