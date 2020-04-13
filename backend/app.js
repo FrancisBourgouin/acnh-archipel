@@ -37,7 +37,7 @@ const schema = buildSchema(`
   }
   type Query {
     archipelagos: [Archipelago]
-    archipelago(id: Int!): Archipelago
+    archipelago(archipelagoId: Int, islanderId: Int): Archipelago
     islands: [Island]
     island(id: Int!): Island
     islanders: [Islander]
@@ -52,26 +52,61 @@ const archipelagos = [
 const islands = [
 	{ id: 1, name: "Raftel", nativeFruit: "Peaches", archipelago_id: 1 },
 	{ id: 2, name: "Montoya", nativeFruit: "Apples", archipelago_id: 1 },
+	{ id: 3, name: "Syracuse", nativeFruit: "Oranges", archipelago_id: 2 },
 ];
 const islanders = [
 	{ id: 1, name: "Francis", island_id: 1 },
 	{ id: 2, name: "Riki", island_id: 2 },
 	{ id: 3, name: "Corrina", island_id: 1 },
+	{ id: 4, name: "Bawb", island_id: 3 },
 ];
+
+const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
+	if (archipelagoId) {
+		const archipelago = archipelagos.find(
+			(archipelago) => archipelago.id === archipelagoId
+		);
+		if (archipelago) {
+			archipelago.islands = islands
+				.filter((island) => island.archipelago_id === archipelagoId)
+				.map((island) => ({
+					...island,
+					islanders: islanders.filter(
+						(islander) => islander.island_id === island.id
+					),
+				}));
+			return archipelago;
+		}
+	}
+
+	if (islanderId) {
+		const islander = islanders.find((islander) => islander.id === islanderId);
+		const island = islands.find((island) => island.id === islander.island_id);
+		const archipelago = archipelagos.find(
+			(archipelago) => archipelago.id === island.archipelago_id
+		);
+		if (archipelago) {
+			archipelago.islands = islands
+				.filter((island) => island.archipelago_id === archipelago.id)
+				.map((island) => ({
+					...island,
+					islanders: islanders.filter(
+						(islander) => islander.island_id === island.id
+					),
+				}));
+			console.log(archipelago.islands);
+			return archipelago;
+		}
+	}
+};
+
 const root = {
 	archipelagos: () => {
-		return archipelagos;
-	},
-	archipelago: ({ id }) => {
-		console.log("archipelago", id);
-		const archipelago = archipelagos.find(
-			(archipelago) => archipelago.id === id
+		return archipelagos.map((archipelago) =>
+			fetchArchipelagoInfo({ archipelagoId: archipelago.id })
 		);
-		archipelago.islands = islands.filter(
-			(island) => island.archipelago_id === id
-		);
-		return archipelago;
 	},
+	archipelago: fetchArchipelagoInfo,
 	islands: () => {
 		return islands;
 	},
