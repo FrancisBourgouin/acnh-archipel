@@ -7,11 +7,11 @@ export const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
 		);
 		if (archipelago) {
 			archipelago.islands = islands
-				.filter((island) => island.archipelago_id === archipelagoId)
+				.filter((island) => island.archipelagoId === archipelagoId)
 				.map((island) => ({
 					...island,
 					islanders: islanders.filter(
-						(islander) => islander.island_id === island.id
+						(islander) => islander.islandId === island.id
 					),
 				}));
 			return archipelago;
@@ -20,17 +20,17 @@ export const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
 
 	if (islanderId) {
 		const islander = islanders.find((islander) => islander.id === islanderId);
-		const island = islands.find((island) => island.id === islander.island_id);
+		const island = islands.find((island) => island.id === islander.islandId);
 		const archipelago = archipelagos.find(
-			(archipelago) => archipelago.id === island.archipelago_id
+			(archipelago) => archipelago.id === island.archipelagoId
 		);
 		if (archipelago) {
 			archipelago.islands = islands
-				.filter((island) => island.archipelago_id === archipelago.id)
+				.filter((island) => island.archipelagoId === archipelago.id)
 				.map((island) => ({
 					...island,
 					islanders: islanders.filter(
-						(islander) => islander.island_id === island.id
+						(islander) => islander.islandId === island.id
 					),
 				}));
 			console.log(archipelago.islands);
@@ -42,7 +42,7 @@ export const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
 export const fetchIslandInfo = ({ id }) => {
 	console.log("island", id);
 	const island = islands.find((island) => island.id === id);
-	island.islanders = islanders.filter((islander) => islander.island_id === id);
+	island.islanders = islanders.filter((islander) => islander.islandId === id);
 	return island;
 };
 
