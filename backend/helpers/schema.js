@@ -1,9 +1,15 @@
 const schemaData = `
+"""
+Archipelago info (id, name, [islands]), searchable by archipelagoId or islanderId
+"""
 type Archipelago {
   id: Int
   name: String
   islands : [Island]
 }
+"""
+Island info ( id, name, nativeFruit, turnipPrice, [islanders]), searchable by islandId
+"""
 type Island {
   id: Int
   name: String
@@ -11,12 +17,19 @@ type Island {
   turnipPrices: [TurnipPrice]
   islanders : [Islander]
 }
+"""
+Islander info ( id, name), searchable by islanderId
+"""
 type Islander {
   id: Int
   name: String
 }
+"""
+Turnip price info ( id, name), searchable by turnipId
+"""
 type TurnipPrice{
   date: String
+  islander_id: Int
   price: Int
 }
 type Query {
