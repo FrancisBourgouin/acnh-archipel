@@ -1,4 +1,4 @@
-import { archipelagos, islanders, islands } from "./sample_data";
+import { archipelagos, islanders, islands } from "./sampleData";
 
 export const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
 	if (archipelagoId) {

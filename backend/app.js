@@ -7,7 +7,7 @@ import {
 	createArchipelago,
 	createIsland,
 	createIslander,
-} from "./helpers/mutation_resolvers";
+} from "./helpers/mutationResolvers";
 import {
 	fetchArchipelagoInfo,
 	fetchArchipelagos,
@@ -15,7 +15,7 @@ import {
 	fetchIslanders,
 	fetchIslandInfo,
 	fetchIslands,
-} from "./helpers/query_resolvers";
+} from "./helpers/queryResolvers";
 import schemaData from "./helpers/schema";
 import indexRouter from "./routes/index";
 

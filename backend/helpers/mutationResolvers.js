@@ -1,4 +1,4 @@
-import { archipelagos, islanders, islands } from "./sample_data";
+import { archipelagos, islanders, islands } from "./sampleData";
 
 export const createArchipelago = ({ name }) => {
 	const newArchipelago = { id: archipelagos.length + 1, name };
