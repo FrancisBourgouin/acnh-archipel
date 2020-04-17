@@ -4,22 +4,34 @@
 	"private": true,
 	"scripts": {
 		"start": "node ./bin/www",
-		"dev": "nodemon --exec babel-node ./bin/www"
+		"dev": "nodemon --exec babel-node ./bin/www",
+		"test": "jest",
+		"test:watch": "jest --watch"
 	},
 	"dependencies": {
+		"@babel/runtime": "^7.9.2",
 		"cookie-session": "~1.4.0",
 		"debug": "~2.6.9",
 		"express": "~4.16.1",
 		"express-graphql": "^0.9.0",
 		"graphql": "^15.0.0",
+		"jest": "^25.3.0",
 		"mongodb": "^3.5.5",
-		"morgan": "~1.9.1"
+		"morgan": "~1.9.1",
+		"regenerator-runtime": "^0.13.5",
+		"supertest": "^4.0.2"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.8.4",
 		"@babel/core": "^7.9.0",
 		"@babel/node": "^7.8.7",
+		"@babel/plugin-transform-runtime": "^7.9.0",
 		"@babel/preset-env": "^7.9.5",
 		"nodemon": "^2.0.3"
+	},
+	"jest": {
+		"setupFilesAfterEnv": [
+			"./setupTests.js"
+		]
 	}
 }
