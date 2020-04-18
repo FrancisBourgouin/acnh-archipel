@@ -48,7 +48,7 @@ const root = {
 	...query_resolvers,
 	...mutation_resolvers,
 };
-console.log(root);
+
 app.use(
 	"/graphql",
 	graphqlHTTP({
