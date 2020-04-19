@@ -37,9 +37,9 @@ type Query {
   archipelagos: [Archipelago]
   archipelago(archipelagoId: Int, islanderId: Int): Archipelago
   islands: [Island]
-  island(id: Int!): Island
+  island(islandId: Int, islanderId: Int): Island
   islanders: [Islander]
-  islander(id: Int!): Islander
+  islander(islanderId: Int): Islander
 }
 type Mutation {
   createArchipelago(name: String!): Archipelago

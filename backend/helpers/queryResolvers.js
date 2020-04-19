@@ -38,14 +38,29 @@ export const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
 	}
 };
 
-export const fetchIslandInfo = ({ id }) => {
-	const island = islands.find((island) => island.id === id);
-	island.islanders = islanders.filter((islander) => islander.islandId === id);
-	return island;
+export const fetchIslandInfo = ({ islandId, islanderId }) => {
+	if (islandId) {
+		const island = islands.find((island) => island.id === islandId);
+		island.islanders = islanders.filter(
+			(islander) => islander.islandId === islandId
+		);
+		return island;
+	}
+
+	if (islanderId) {
+		const islander = islanders.find((islander) => islander.id === islanderId);
+
+		const island = islands.find((island) => island.id === islander.islandId);
+
+		island.islanders = islanders.filter(
+			(islander) => islander.islandId === island.id
+		);
+		return island;
+	}
 };
 
-export const fetchIslanderInfo = ({ id }) => {
-	return islanders.find((islander) => islander.id === id);
+export const fetchIslanderInfo = ({ islanderId }) => {
+	return islanders.find((islander) => islander.id === islanderId);
 };
 
 export const fetchArchipelagos = () => {
@@ -55,7 +70,7 @@ export const fetchArchipelagos = () => {
 };
 
 export const fetchIslands = () => {
-	return islands.map(fetchIslandInfo);
+	return islands.map((island) => fetchIslandInfo({ islandId: island.id }));
 };
 
 export const fetchIslanders = () => {

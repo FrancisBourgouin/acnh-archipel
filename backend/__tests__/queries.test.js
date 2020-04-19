@@ -286,10 +286,22 @@ describe("Test GraphQL queries", () => {
 		const expectedResponse = {
 			data: {
 				islanders: [
-					{ id: "1", name: "Francis" },
-					{ id: "2", name: "Riki" },
-					{ id: "3", name: "Corrina" },
-					{ id: "4", name: "Bawb" },
+					{
+						id: "1",
+						name: "Francis",
+					},
+					{
+						id: "2",
+						name: "Riki",
+					},
+					{
+						id: "3",
+						name: "Corrina",
+					},
+					{
+						id: "4",
+						name: "Bawb",
+					},
 				],
 			},
 		};
