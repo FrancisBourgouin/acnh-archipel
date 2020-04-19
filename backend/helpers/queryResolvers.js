@@ -33,21 +33,18 @@ export const fetchArchipelagoInfo = ({ archipelagoId, islanderId }) => {
 						(islander) => islander.islandId === island.id
 					),
 				}));
-			console.log(archipelago.islands);
 			return archipelago;
 		}
 	}
 };
 
 export const fetchIslandInfo = ({ id }) => {
-	console.log("island", id);
 	const island = islands.find((island) => island.id === id);
 	island.islanders = islanders.filter((islander) => islander.islandId === id);
 	return island;
 };
 
 export const fetchIslanderInfo = ({ id }) => {
-	console.log("islander", id);
 	return islanders.find((islander) => islander.id === id);
 };
 
