@@ -8,8 +8,20 @@ export const islands = [
 	{ id: 3, name: "Syracuse", nativeFruit: "Oranges", archipelagoId: 2 },
 ];
 export const islanders = [
-	{ id: 1, name: "Francis", islandId: 1 },
-	{ id: 2, name: "Riki", islandId: 2 },
-	{ id: 3, name: "Corrina", islandId: 1 },
-	{ id: 4, name: "Bawb", islandId: 3 },
+	{
+		id: 1,
+		name: "Francis",
+		islandId: 1,
+		email: "1@archipel.com",
+		password: "",
+	},
+	{ id: 2, name: "Riki", islandId: 2, email: "1@archipel.com", password: "" },
+	{
+		id: 3,
+		name: "Corrina",
+		islandId: 1,
+		email: "1@archipel.com",
+		password: "",
+	},
+	{ id: 4, name: "Bawb", islandId: 3, email: "1@archipel.com", password: "" },
 ];
