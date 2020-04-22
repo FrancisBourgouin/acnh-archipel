@@ -25,9 +25,11 @@ auth.post("/login", (req, res, next) => {
 });
 
 auth.post("/register", (req, res, next) => {
+	console.log(req.body);
 	const { name, email, password } = req.body;
 	const user = createUser({ name, email, password });
 	if (user) {
+		req.session.userId = user.id;
 		res.json({ name, email, id: user.id });
 	} else {
 		res.status(403).json({});
