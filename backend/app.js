@@ -1,3 +1,4 @@
+import cookieSession from "cookie-session";
 import express from "express";
 import graphqlHTTP from "express-graphql";
 import { buildSchema } from "graphql";
@@ -17,16 +18,29 @@ import {
 	fetchIslands,
 } from "./helpers/queryResolvers";
 import schemaData from "./helpers/schema";
-import indexRouter from "./routes/index";
+import authRouter from "./routes/authRouter";
 
 const app = express();
+app.set("trust proxy", 1);
 
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+	cookieSession({
+		name: "session",
+		keys: ["*h}N/$Ccc,|U(8Z}7lbPO)pB_qTZ8!", "b|NXh$igsw`Q{>=}@drUnT#wJ(@]OY"],
+	})
+);
 
-app.use("/", indexRouter);
+app.get("/", function (req, res, next) {
+	res.send(
+		"Hello. \n '/graphql' for the GraphQL endpoint \n '/auth' for authentication / registration"
+	);
+});
+
+app.use("/auth", authRouter);
 
 const schema = buildSchema(schemaData);
 
