@@ -16,13 +16,22 @@
 const exampleArchipelago = {
   _id: 0,
   name: "",
+  friendsOnly: true,
+  friendInvites: [
+    "email"
+  ],
   islands: [
     {
       name: "",
       nativeFruit: "",
       islanders: [{
         name: "",
-
+        email: "",
+        password: "",
+        avatarImage: "",
+        recipes: [
+          "nameOfRecipe"
+        ]
       }],
       turnipPrices: [],
       residents: [],

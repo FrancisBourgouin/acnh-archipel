@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"start": "node ./bin/www",
-		"dev": "nodemon --exec babel-node ./bin/www",
+		"dev": "concurrently \"sudo mongod --dbpath ./db/dev\" \"nodemon --exec babel-node ./bin/www\"",
 		"test": "jest",
 		"test:watch": "jest --watch"
 	},
@@ -28,6 +28,7 @@
 		"@babel/node": "^7.8.7",
 		"@babel/plugin-transform-runtime": "^7.9.0",
 		"@babel/preset-env": "^7.9.5",
+		"concurrently": "^5.1.0",
 		"nodemon": "^2.0.3"
 	},
 	"jest": {
