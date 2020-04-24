@@ -5,3 +5,22 @@
 .btn-shadow {
     box-shadow: 0 2px 1px #00000044;
 }
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.gap-3 {
+    grid-gap: 2rem;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.animate {
+    transition: all 0.25s ease-out;
+}
