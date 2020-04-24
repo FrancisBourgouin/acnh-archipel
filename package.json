@@ -1,0 +1,27 @@
+{
+    "name": "acnh-archipel",
+    "version": "0.1.0",
+    "description": "Animal Archipelago",
+    "main": "index.js",
+    "scripts": {
+        "init": "cd client && yarn && cd ../backend && yarn",
+        "dev": "concurrently \"yarn run client\" \"yarn run server\"",
+        "client": "cd client; yarn start",
+        "server": "cd backend; yarn run dev"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FrancisBourgouin/acnh-archipel.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/FrancisBourgouin/acnh-archipel/issues"
+    },
+    "homepage": "https://github.com/FrancisBourgouin/acnh-archipel#readme",
+    "dependencies": {},
+    "devDependencies": {
+        "concurrently": "^5.1.0"
+    }
+}
