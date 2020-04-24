@@ -2,23 +2,18 @@ import cookieSession from "cookie-session";
 import express from "express";
 import graphqlHTTP from "express-graphql";
 import { buildSchema } from "graphql";
+import { MongoClient } from 'mongodb';
 import logger from "morgan";
 import path from "path";
-import {
-	createArchipelago,
-	createIsland,
-	createIslander,
-} from "./helpers/mutationResolvers";
-import {
-	fetchArchipelagoInfo,
-	fetchArchipelagos,
-	fetchIslanderInfo,
-	fetchIslanders,
-	fetchIslandInfo,
-	fetchIslands,
-} from "./helpers/queryResolvers";
+import mutationResolvers from "./helpers/mutationResolvers";
+import queryResolvers from "./helpers/queryResolvers";
 import schemaData from "./helpers/schema";
 import authRouter from "./routes/authRouter";
+
+const url = 'mongodb://localhost:27017';
+const dbName = 'archipelago_test';
+
+
 
 const app = express();
 app.set("trust proxy", 1);
@@ -42,34 +37,59 @@ app.get("/", function (req, res, next) {
 
 app.use("/auth", authRouter);
 
-const schema = buildSchema(schemaData);
 
-const query_resolvers = {
-	archipelagos: fetchArchipelagos,
-	archipelago: fetchArchipelagoInfo,
-	islands: fetchIslands,
-	island: fetchIslandInfo,
-	islanders: fetchIslanders,
-	islander: fetchIslanderInfo,
-};
 
-const mutation_resolvers = {
-	createArchipelago: createArchipelago,
-	createIsland: createIsland,
-	createIslander: createIslander,
-};
-const root = {
-	...query_resolvers,
-	...mutation_resolvers,
-};
+MongoClient
+	.connect(url, { useUnifiedTopology: true })
+	.then(client => {
+		const db = client.db(dbName);
+		const {
+			fetchArchipelagoInfo,
+			fetchArchipelagos,
+			fetchIslanderInfo,
+			fetchIslanders,
+			fetchIslandInfo,
+			fetchIslands
+		} = queryResolvers(db)
 
-app.use(
-	"/graphql",
-	graphqlHTTP({
-		schema: schema,
-		rootValue: root,
-		graphiql: true,
+		const {
+			createArchipelago,
+			createIsland,
+			createIslander
+		} = mutationResolvers(db)
+
+		const schema = buildSchema(schemaData);
+
+		const query_resolvers = {
+			archipelagos: fetchArchipelagos,
+			archipelago: fetchArchipelagoInfo,
+			islands: fetchIslands,
+			island: fetchIslandInfo,
+			islanders: fetchIslanders,
+			islander: fetchIslanderInfo,
+		};
+
+		const mutation_resolvers = {
+			createArchipelago: createArchipelago,
+			createIsland: createIsland,
+			createIslander: createIslander,
+		};
+		const root = {
+			...query_resolvers,
+			...mutation_resolvers,
+		};
+
+		app.use(
+			"/graphql",
+			graphqlHTTP({
+				schema: schema,
+				rootValue: root,
+				graphiql: true,
+			})
+		);
 	})
-);
+
+
+
 
 module.exports = app;

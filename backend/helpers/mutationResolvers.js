@@ -1,25 +1,12 @@
-import { archipelagos, islanders, islands } from "./sampleData";
+export default (db) => {
 
-export const createArchipelago = ({ name }) => {
-	const newArchipelago = { id: archipelagos.length + 1, name };
-	archipelagos.push(newArchipelago);
 
-	return newArchipelago;
-};
-export const createIsland = ({ name, nativeFruit, archipelagoId }) => {
-	const newIsland = {
-		id: islands.length + 1,
-		name,
-		nativeFruit,
-		archipelagoId,
+	const createArchipelago = ({ name }) => {
 	};
-	islands.push(newIsland);
+	const createIsland = ({ name, nativeFruit, archipelagoId }) => {
+	};
+	const createIslander = ({ name, islandId }) => {
+	};
 
-	return newIsland;
-};
-export const createIslander = ({ name, islandId }) => {
-	const newIslander = { id: islanders.length + 1, name, islandId };
-	islanders.push(newIslander);
-
-	return newIslander;
-};
+	return { createArchipelago, createIsland, createIslander }
+}

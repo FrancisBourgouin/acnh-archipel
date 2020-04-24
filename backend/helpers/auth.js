@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { islanders } from "./sampleData";
+import { islanders } from "./old/sampleData";
 
 const salt = bcrypt.genSaltSync(10);
 const hash = bcrypt.hashSync("password", salt);
