@@ -1,4 +1,4 @@
-const MongoClient = require('mongodb').MongoClient;
+const { MongoClient, ObjectID } = require('mongodb');
 
 
 const url = 'mongodb://localhost:27017';
@@ -14,10 +14,12 @@ const residents2 = ["Flora", "Fauna", "Ribbot"]
 
 const raftel =
 {
+  _id: new ObjectID("5ea22201b7394d525ad37bb9"),
   name: "Raftel",
   nativeFruit: "Peaches",
   islanders: [
     {
+      _id: new ObjectID("00000457d3fe2a61141d63e0"),
       name: "Francis",
       email: "1@archipel.com",
       password: "",
@@ -31,10 +33,11 @@ const raftel =
 }
 const montoya =
 {
+  _id: new ObjectID("5ea12f01b7234d525ad37bb9"),
   name: "Montoya",
   nativeFruit: "Apples",
   islanders: [{
-    id: 2,
+    _id: new ObjectID("000008aed3fe2a61141d63e1"),
     name: "Riki",
     islandId: 2,
     email: "1@archipel.com",
@@ -49,10 +52,11 @@ const montoya =
 }
 const syracuse =
 {
+  _id: new ObjectID("5ea33f01b7394d525ad37bb9"),
   name: "Syracuse",
   nativeFruit: "Oranges",
   islanders: [{
-    id: 3,
+    _id: new ObjectID("00000d05d3fe2a61141d63e2"),
     name: "Corrina",
     islandId: 1,
     email: "2@archipel.com",
@@ -67,6 +71,7 @@ const syracuse =
 }
 
 const archipelago = {
+  _id: new ObjectID("5ea33f81b7394d525ad37fe9"),
   name: "Covidian Montréal Consortium",
   friendsOnly: true,
   friendInvites: ["invite@archipelago.com"],

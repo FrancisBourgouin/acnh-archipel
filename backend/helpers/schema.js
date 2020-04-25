@@ -3,7 +3,7 @@ const schemaData = `
 Archipelago info (id, name, [islands]), searchable by archipelagoId or islanderId
 """
 type Archipelago {
-  id: ID
+  id: String
   name: String
   islands : [Island]
 }
@@ -35,11 +35,11 @@ type TurnipPrice{
 }
 type Query {
   archipelagos: [Archipelago]
-  archipelago(archipelagoId: Int, islanderId: Int): Archipelago
+  archipelago(archipelagoId: String, islanderId: String): Archipelago
   islands: [Island]
-  island(islandId: Int, islanderId: Int): Island
+  island(islandId: String, islanderId: String): Island
   islanders: [Islander]
-  islander(islanderId: Int): Islander
+  islander(islanderId: String): Islander
 }
 type Mutation {
   createArchipelago(name: String!): Archipelago
