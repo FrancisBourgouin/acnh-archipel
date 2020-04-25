@@ -3,32 +3,39 @@ const schemaData = `
 Archipelago info (id, name, [islands]), searchable by archipelagoId or islanderId
 """
 type Archipelago {
-  id: String
+  _id: String
   name: String
+  friendsOnly: Boolean
+  friendInvites: [String]
   islands : [Island]
 }
 """
 Island info ( id, name, nativeFruit, turnipPrice, [islanders]), searchable by islandId
 """
 type Island {
-  id: ID
+  _id: String
   name: String
   nativeFruit: String
   turnipPrices: [TurnipPrice]
-  islanders : [Islander]
+  islanders: [Islander]
+  hotItems: [String]
+  residents: [String]
 }
 """
 Islander info ( id, name), searchable by islanderId
 """
 type Islander {
-  id: ID
+  _id: String
   name: String
+  email: String
+  avatarImage: String
+  recipes: [String]
 }
 """
 Turnip price info ( id, name), searchable by turnipId
 """
 type TurnipPrice{
-  id: ID
+  id: String
   date: String
   islander_id: Int
   price: Int

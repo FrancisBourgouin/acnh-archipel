@@ -19,7 +19,6 @@ export default (db) => {
 		if (islandId) {
 			search["islands._id"] = new ObjectID.createFromHexString(islandId)
 			const result = await archipelagos.find(search).toArray()
-			console.log(result[0].islands[0]._id, typeof (result[0].islands[0]._id))
 			return result[0].islands.find(island => (island._id).toHexString() === islandId)
 		} else {
 			search["islands.islanders._id"] = new ObjectID.createFromHexString(islanderId)
