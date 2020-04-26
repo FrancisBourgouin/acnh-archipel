@@ -10,7 +10,7 @@ import queryResolvers from "./helpers/queryResolvers";
 import schemaData from "./helpers/schema";
 import authRouter from "./routes/authRouter";
 
-const url = 'mongodb://localhost:27017';
+const url = `mongodb://${process.env.WSL_HOST || "localhost"}:27017`;
 const dbName = 'archipelago_test';
 
 
