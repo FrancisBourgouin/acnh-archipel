@@ -3,48 +3,53 @@ const schemaData = `
 Archipelago info (id, name, [islands]), searchable by archipelagoId or islanderId
 """
 type Archipelago {
-  id: ID
+  _id: String
   name: String
+  friendsOnly: Boolean
+  friendInvites: [String]
   islands : [Island]
 }
 """
 Island info ( id, name, nativeFruit, turnipPrice, [islanders]), searchable by islandId
 """
 type Island {
-  id: ID
+  _id: String
   name: String
   nativeFruit: String
   turnipPrices: [TurnipPrice]
-  islanders : [Islander]
+  islanders: [Islander]
+  hotItems: [String]
+  residents: [String]
 }
 """
 Islander info ( id, name), searchable by islanderId
 """
 type Islander {
-  id: ID
+  _id: String
   name: String
+  email: String
+  avatarImage: String
+  recipes: [String]
 }
 """
-Turnip price info ( id, name), searchable by turnipId
+Turnip price info ( id, name), searchable in islander
 """
 type TurnipPrice{
-  id: ID
   date: String
-  islander_id: Int
   price: Int
 }
 type Query {
   archipelagos: [Archipelago]
-  archipelago(archipelagoId: Int, islanderId: Int): Archipelago
+  archipelago(archipelagoId: String, islanderId: String): Archipelago
   islands: [Island]
-  island(islandId: Int, islanderId: Int): Island
+  island(islandId: String, islanderId: String): Island
   islanders: [Islander]
-  islander(islanderId: Int): Islander
+  islander(islanderId: String): Islander
 }
 type Mutation {
   createArchipelago(name: String!): Archipelago
-  createIsland(name: String!, nativeFruit: String!, archipelagoId: Int!): Island
-  createIslander(name: String!, islandId: Int!): Islander
+  createIsland(name: String!, nativeFruit: String!, archipelagoId: String!): Island
+  createIslander(name: String!, password: String!, islandId: String!, email: String!, avatarImage: String): Islander
 }
 `;
 export default schemaData;

@@ -1,25 +1,65 @@
-import { archipelagos, islanders, islands } from "./sampleData";
+import bcrypt from 'bcrypt';
+import { ObjectID } from 'mongodb';
 
-export const createArchipelago = ({ name }) => {
-	const newArchipelago = { id: archipelagos.length + 1, name };
-	archipelagos.push(newArchipelago);
+export default (db) => {
 
-	return newArchipelago;
-};
-export const createIsland = ({ name, nativeFruit, archipelagoId }) => {
-	const newIsland = {
-		id: islands.length + 1,
-		name,
-		nativeFruit,
-		archipelagoId,
+	const archipelagos = db.collection('archipelagos')
+	const islands = db.collection('islands')
+	const islanders = db.collection('islanders')
+
+	const createArchipelago = async ({ name }) => {
+		const archipelagoInfo = {
+			_id: new ObjectID(),
+			name,
+			friendsOnly: true,
+			friendInvites: [],
+			islands: []
+		}
+
+		await archipelagos.insertOne(archipelagoInfo)
+
+		return archipelagoInfo
 	};
-	islands.push(newIsland);
+	const createIsland = async ({ name, nativeFruit, archipelagoId }) => {
+		const _id = new ObjectID.createFromHexString(archipelagoId)
+		const islandInfo = {
+			_id: new ObjectID(),
+			name,
+			nativeFruit,
+			turnipPrices: [],
+			islanders: [],
+			hotItems: [],
+			residents: []
+		}
+		const newIsland = await islands.insertOne(islandInfo)
 
-	return newIsland;
-};
-export const createIslander = ({ name, islandId }) => {
-	const newIslander = { id: islanders.length + 1, name, islandId };
-	islanders.push(newIslander);
+		await archipelagos.updateOne(
+			{ _id },
+			{ $push: { islands: newIsland.insertedId } }
+		)
 
-	return newIslander;
-};
+		return islandInfo
+	};
+	const createIslander = async ({ name, password, islandId, email, avatarImage }) => {
+		const _id = new ObjectID.createFromHexString(islandId)
+		const hashedPassword = await bcrypt.hash(password, salt)
+		const islanderInfo = {
+			_id: new ObjectID(),
+			name,
+			password: hashedPassword,
+			email,
+			avatarImage,
+			recipes: [],
+		}
+		const newIslander = await islanders.insertOne(islanderInfo)
+
+		await islands.updateOne(
+			{ _id },
+			{ $push: { islanders: newIslander.insertedId } }
+		)
+
+		return islanderInfo
+	};
+
+	return { createArchipelago, createIsland, createIslander }
+}
