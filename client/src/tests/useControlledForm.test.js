@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useControlledForm } from "../hooks/useControlledForm";
 
