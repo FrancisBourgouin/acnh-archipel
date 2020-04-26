@@ -2,76 +2,154 @@ import { ObjectID } from 'mongodb';
 
 export default (db) => {
 	const archipelagos = db.collection('archipelagos')
+	const islands = db.collection('islands')
+	const islanders = db.collection('islanders')
 
 	const fetchArchipelagoInfo = async ({ archipelagoId, islanderId }) => {
 		const search = {}
 		if (archipelagoId) {
 			search._id = new ObjectID.createFromHexString(archipelagoId)
 		} else {
-			search["islands.islanders._id"] = new ObjectID.createFromHexString(islanderId)
+			search["islands.islanders"] = new ObjectID.createFromHexString(islanderId)
 		}
-		const result = await archipelagos.find(search).toArray()
+		const result =
+			await archipelagos
+				.aggregate([
+					{
+						$lookup: {
+							from: 'islands',
+							localField: 'islands',
+							foreignField: '_id',
+							as: 'islands'
+						}
+					},
+					{ $match: search },
+					{
+						$unwind: {
+							path: '$islands'
+						}
+					},
+					{
+						$lookup: {
+							from: 'islanders',
+							localField: 'islands.islanders',
+							foreignField: '_id',
+							as: 'islands.islanders'
+						}
+					},
+					{
+						$group: {
+							_id: '$_id',
+							name: { "$first": "$name" },
+							friendsOnly: { "$first": "$friendsOnly" },
+							friendInvites: { "$first": "$friendInvites" },
+							islands: { "$push": "$islands" }
+						}
+					}
+				])
+				.toArray()
 		return result[0]
 	};
 
 	const fetchIslandInfo = async ({ islandId, islanderId }) => {
 		const search = {}
 		if (islandId) {
-			search["islands._id"] = new ObjectID.createFromHexString(islandId)
-			const result = await archipelagos.find(search).toArray()
-			return result[0].islands.find(island => (island._id).toHexString() === islandId)
+			search["_id"] = new ObjectID.createFromHexString(islandId)
 		} else {
-			search["islands.islanders._id"] = new ObjectID.createFromHexString(islanderId)
-			const result = await archipelagos.find(search).toArray()
-			const island = result[0]
-				.islands
-				.filter(
-					({ islanders }) => islanders.filter(islander => (islander._id).toHexString() === islanderId).length)
-
-			return island[0]
-		}
-	};
+			search["islanders"] = new ObjectID.createFromHexString(islanderId)
+		};
+		const result =
+			await islands
+				.aggregate([
+					{ $match: search }, {
+						$lookup: {
+							from: 'islanders',
+							localField: 'islanders',
+							foreignField: '_id',
+							as: 'islanders'
+						}
+					}])
+				.toArray()
+		return result[0]
+	}
 
 	const fetchIslanderInfo = async ({ islanderId }) => {
-		const output = []
-		const archipelagoList = await archipelagos.find().toArray()
-		archipelagoList
-			.forEach(archipelago => {
-				archipelago.islands
-					.forEach(island => {
-						island.islanders
-							.forEach(islander => output.push(islander))
-					})
-			})
-		return output.find(islander => islander._id.toHexString() === islanderId)
+		const search = { "_id": new ObjectID.createFromHexString(islanderId) }
+		const result =
+			await islanders
+				.aggregate([
+					{ $match: search }, {
+						$lookup: {
+							from: 'islanders',
+							localField: 'islanders',
+							foreignField: '_id',
+							as: 'islanders'
+						}
+					}])
+				.toArray()
+		return result[0]
 	};
 
 	const fetchArchipelagos = async () => {
-
-		return await archipelagos.find().toArray()
+		const result =
+			await archipelagos
+				.aggregate([
+					{
+						$lookup: {
+							from: 'islands',
+							localField: 'islands',
+							foreignField: '_id',
+							as: 'islands'
+						}
+					},
+					{
+						$unwind: {
+							path: '$islands'
+						}
+					},
+					{
+						$lookup: {
+							from: 'islanders',
+							localField: 'islands.islanders',
+							foreignField: '_id',
+							as: 'islands.islanders'
+						}
+					},
+					{
+						$group: {
+							_id: '$_id',
+							name: { "$first": "$name" },
+							friendsOnly: { "$first": "$friendsOnly" },
+							friendInvites: { "$first": "$friendInvites" },
+							islands: { "$push": "$islands" }
+						}
+					}
+				])
+				.toArray()
+		return result
 	};
 
 	const fetchIslands = async () => {
-		const output = []
-		const archipelagoList = await archipelagos.find().toArray()
-		archipelagoList.forEach(archipelago => {
-			archipelago.islands.forEach(island => output.push(island))
-		})
-		return output
+		const result =
+			await islands
+				.aggregate([{
+					$lookup: {
+						from: 'islanders',
+						localField: 'islanders',
+						foreignField: '_id',
+						as: 'islanders'
+					}
+				}])
+				.toArray()
+		return result
 	};
 
 	const fetchIslanders = async () => {
-		const output = []
-		const archipelagoList = await archipelagos.find().toArray()
-		archipelagoList
-			.forEach(archipelago => {
-				archipelago.islands
-					.forEach(island => {
-						island.islanders
-							.forEach(islander => output.push(islander))
-					})
-			})
-		return output
+		const result =
+			await islanders
+				.find()
+				.toArray()
+		return result
 	};
 
 

@@ -32,12 +32,10 @@ type Islander {
   recipes: [String]
 }
 """
-Turnip price info ( id, name), searchable by turnipId
+Turnip price info ( id, name), searchable in islander
 """
 type TurnipPrice{
-  id: String
   date: String
-  islander_id: Int
   price: Int
 }
 type Query {
@@ -50,8 +48,8 @@ type Query {
 }
 type Mutation {
   createArchipelago(name: String!): Archipelago
-  createIsland(name: String!, nativeFruit: String!, archipelagoId: Int!): Island
-  createIslander(name: String!, islandId: Int!): Islander
+  createIsland(name: String!, nativeFruit: String!, archipelagoId: String!): Island
+  createIslander(name: String!, password: String!, islandId: String!, email: String!, avatarImage: String): Islander
 }
 `;
 export default schemaData;
