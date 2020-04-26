@@ -35,7 +35,6 @@ app.get("/", function (req, res, next) {
 	);
 });
 
-app.use("/auth", authRouter);
 
 
 
@@ -43,6 +42,9 @@ MongoClient
 	.connect(url, { useUnifiedTopology: true })
 	.then(client => {
 		const db = client.db(dbName);
+
+		app.use("/auth", authRouter(db));
+
 		const {
 			fetchArchipelagoInfo,
 			fetchArchipelagos,

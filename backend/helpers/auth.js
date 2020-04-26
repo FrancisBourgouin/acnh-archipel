@@ -1,37 +1,49 @@
 import bcrypt from "bcrypt";
-import { islanders } from "./old/sampleData";
+import { ObjectID } from "mongodb";
 
 const salt = bcrypt.genSaltSync(10);
 const hash = bcrypt.hashSync("password", salt);
 
-// Fix for static data set
-const fixedIslanders = islanders.map((islander) => ({
-	...islander,
-	password: hash,
-}));
+export default (db) => {
 
-export const findUserById = (userId) => {
-	return fixedIslanders.find((islander) => islander.id === userId);
-};
+	const islanders = db.collection('islanders')
+	const islands = db.collection('islanders')
 
-export const validateUser = (email, password) => {
-	const user = fixedIslanders.find((islander) => islander.email === email);
-	return bcrypt
-		.compare(password, user ? user.password : null)
-		.then((result) => (result ? user : null))
-		.catch(() => null);
-};
+	const findUserById = async (userId) => {
+		const _id = new ObjectID.createFromHexString(userId)
 
-export const createUser = (user) => {
-	const { name, email, password } = user;
-	if (name && email && password) {
-		const newId = Object.keys(fixedIslanders).length + 1;
+		return await islanders.findOne({ _id });
+	};
 
-		user.password = bcrypt.hashSync(password, salt);
-		user.id = newId;
+	const validateUser = async (email, password) => {
+		const user = await islanders.findOne({ email });
+		console.log(user)
+		return bcrypt
+			.compare(password, user ? user.password : null)
+			.then((result) => (result ? user : null))
+			.catch(() => null);
+	};
 
-		fixedIslanders.push(user);
-		return { id: user.id, name, email };
-	}
-	return null;
-};
+	const createUser = async ({ name, password, islandId, email, avatarImage }) => {
+		const _id = new ObjectID.createFromHexString(islandId)
+		const hashedPassword = await bcrypt.hash(password, salt)
+		const islanderInfo = {
+			_id: new ObjectID(),
+			name,
+			password: hashedPassword,
+			email,
+			avatarImage,
+			recipes: [],
+		}
+
+		const newIslander = await islanders.insertOne(islanderInfo)
+		await islands.updateOne(
+			{ _id },
+			{ $push: { islanders: newIslander.insertedId } }
+		)
+		return islanderInfo
+	};
+
+	return { findUserById, validateUser, createUser }
+
+}
