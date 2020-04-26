@@ -1,28 +1,61 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
-  return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-        <li>
-          <Link to="/archipelago">Archipelago</Link>
-        </li>
-      </ul>
-    </nav>
-  )
-}
+    const navRoutes = [
+        {
+            to: "/",
+            label: "Home",
+        },
+        {
+            to: "/register",
+            label: "Register",
+            loggedOut: true,
+        },
+        {
+            to: "/login",
+            label: "Login",
+            loggedOut: true,
+        },
+        {
+            to: "/profile",
+            label: "Profile",
+            loggedIn: true,
+        },
+        {
+            to: "/archipelago",
+            label: "Archipelago",
+            loggedIn: true,
+        },
+    ];
 
-export default Navigation
+    return (
+        <nav className="bg-secondary-1 ma0 pa2">
+            <ul className="flex justify-between items-center list">
+                <aside className="f3">
+                    <Link className="link primary-2 hover-primary-1" to="/">
+                        AniArch
+                    </Link>
+                </aside>
+
+                <main className="flex">
+                    {navRoutes.map(
+                        (route, i) =>
+                            !route.loggedIn && (
+                                <li key={"nav-link-" + i} className="ml4">
+                                    <Link
+                                        className="link primary-2 hover-primary-1"
+                                        to={route.to}
+                                    >
+                                        {route.label}
+                                    </Link>
+                                </li>
+                            )
+                    )}
+                </main>
+            </ul>
+        </nav>
+    );
+};
+
+export default Navigation;
