@@ -1,0 +1,15 @@
+.Registration{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1,h2{
+    text-align: center;
+  }
+  form{
+    max-width:500px;
+    padding:3em;
+    display:flex;
+    flex-direction: column;
+  }
+}
