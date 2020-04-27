@@ -40,7 +40,7 @@ type TurnipPrice{
 }
 type Query {
   archipelagos: [Archipelago]
-  archipelago(archipelagoId: String, islanderId: String): Archipelago
+  archipelago(archipelagoId: String, islanderId: String, email: String): Archipelago
   islands: [Island]
   island(islandId: String, islanderId: String): Island
   islanders: [Islander]
