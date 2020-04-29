@@ -11,9 +11,11 @@ import {
 export default () => {
     const mobileApps = [
         {
-            to: "/chat",
-            icon: <ChatIcon />,
-            label: "Archipelago Chat",
+            to: "/profile",
+            icon: (
+                <i className="f-subheadline light-gray fas fa-address-card"></i>
+            ),
+            label: "Your Passport",
         },
         {
             to: "/market",
@@ -29,6 +31,11 @@ export default () => {
             to: "/archipelago",
             icon: <IslandSearchIcon />,
             label: "Island Search",
+        },
+        {
+            to: "/chat",
+            icon: <ChatIcon />,
+            label: "Archipelago Chat",
         },
     ];
 

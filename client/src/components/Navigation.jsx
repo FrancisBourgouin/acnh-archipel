@@ -35,7 +35,7 @@ const Navigation = () => {
     return (
         <nav className="bg-secondary-1 ma0 pa2">
             <ul className="flex justify-between items-center list">
-                <aside className="f3">
+                <aside className="f3 f2-ns">
                     <Link
                         className="fink ts-1 link primary-2 hover-primary-1"
                         to="/"
@@ -53,7 +53,7 @@ const Navigation = () => {
                                     className="mr2 mr3-ns"
                                 >
                                     <Link
-                                        className="link primary-2 hover-primary-1"
+                                        className="f4-ns ph1 ph2-ns pv2 link primary-2 hover-primary-1"
                                         to={route.to}
                                     >
                                         {route.label}
