@@ -46,7 +46,7 @@ export default () => {
                     className="flex-center flex-column no-underline secondary-1 grow"
                     to={app.to}
                 >
-                    <div className="flex-center grow pa2 w3 w4-ns h3 h4-ns br4 bg-light-silver hover-bg-moon-gray animate">
+                    <div className="flex-center grow pa2 w3 w4-ns h3 h4-ns br4 bg-light-silver hover-bg-moon-gray transition">
                         {app.icon}
                     </div>
                     <div className="mt2 tc grow-large ">{app.label}</div>
