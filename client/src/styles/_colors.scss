@@ -53,6 +53,12 @@
 .bg-secondary-2 {
     background-color: var(--secondary-2);
 }
+.hover-bg-secondary-1:hover {
+    background-color: var(--secondary-1);
+}
+.hover-bg-secondary-2:hover {
+    background-color: var(--secondary-2);
+}
 
 .tertiary-1 {
     color: var(--tertiary-1);

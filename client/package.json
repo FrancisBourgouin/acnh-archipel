@@ -18,7 +18,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-test-renderer": "^16.9.0",
-    "urql": "^1.9.7"
+    "urql": "^1.9.7",
+    "tachyons-sass": "^4.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
