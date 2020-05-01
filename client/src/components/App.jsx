@@ -24,65 +24,36 @@ const App = () => {
   }, []);
 
   return (
-    <Router>
-      <div className="App">
-        <Header />
-        <Switch>
-          {user && (
-            <Route exact path="/">
-              <Home />
-            </Route>
-          )}
-          <Route exact path="/dashboard">
-            <Dashboard />
-          </Route>
-
-<<<<<<< HEAD
-  return (
     <Provider value={client}>
-          <Router>
-            <div className="App">
-              <Header />
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route exact path="/register">
-                  <Register {...{ user, setUser }} />
-                </Route>
-                <Route exact path="/login">
-                  <Login {...{ user, setUser }} />
-                </Route>
-                <Route exact path="/profile">
-                  <Profile />
-                </Route>
-                <Route exact path="/archipelago">
-                  <Archipelago />
-                </Route>
-              </Switch>
-            </div>
-          </Router>
-        </Provider>
+      <Router>
+        <div className="App">
+          <Header />
+          <Switch>
+            {user && (
+              <Route exact path="/">
+                <Home />
+              </Route>
+            )}
+            <Route exact path="/register">
+              <Register {...{ user, setUser }} />
+            </Route>
+            <Route exact path="/login">
+              <Login {...{ user, setUser }} />
+            </Route>
+            <Route exact path="/profile">
+              <Profile />
+            </Route>
+            <Route exact path="/archipelago">
+              <Archipelago />
+            </Route>
+            <Route exact path="/dashboard">
+              <Dashboard />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
-=======
-                    <Route exact path="/register">
-          <Register {...{ user, setUser }} />
-        </Route>
-        <Route exact path="/login">
-          <Login {...{ user, setUser }} />
-        </Route>
-        <Route exact path="/profile">
-          <Profile />
-        </Route>
-        <Route exact path="/archipelago">
-          <Archipelago />
-        </Route>
-                </Switch>
-            </div>
-        </Router >
-    );
-};
->>>>>>> master
 
 export default App;
