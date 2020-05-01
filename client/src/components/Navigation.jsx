@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navigation = () => {
 	const navRoutes = [
 		{
-			to: "/",
+			to: "/dashboard",
 			label: "Home",
 		},
 		{

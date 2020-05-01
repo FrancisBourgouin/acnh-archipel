@@ -30,21 +30,17 @@ const App = () => {
 				<div className="App">
 					<Header />
 					<Switch>
-						{!user && (
-							<Switch>
-								<Route exact path="/">
-									<Home />
-								</Route>
-								<Route exact path="/register">
-									<Register {...{ user, setUser }} />
-								</Route>
-								<Route exact path="/login">
-									<Login {...{ user, setUser }} />
-								</Route>
-							</Switch>
-						)}
-
 						<Route exact path="/">
+							<Home />
+						</Route>
+						<Route exact path="/register">
+							<Register {...{ user, setUser }} />
+						</Route>
+						<Route exact path="/login">
+							<Login {...{ user, setUser }} />
+						</Route>
+
+						<Route exact path="/dashboard">
 							<Dashboard />
 						</Route>
 
