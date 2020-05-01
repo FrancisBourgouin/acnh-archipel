@@ -63,5 +63,16 @@ export default (db) => {
 		return islanderInfo
 	};
 
-	return { createArchipelago, createIsland, createIslander }
+	const createTurnipPrice = async ({ price, date, islandId }) => {
+		const _id = new ObjectID.createFromHexString(islandId)
+		const parsedDate = new Date(date).toUTCString()
+		const islandInfo = await islands.updateOne(
+			{ _id },
+			{ $push: { turnipPrices: { price, date: parsedDate } } }
+		)
+
+		return { price, date: parsedDate }
+	}
+
+	return { createArchipelago, createIsland, createIslander, createTurnipPrice }
 }

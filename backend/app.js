@@ -57,7 +57,8 @@ MongoClient
 		const {
 			createArchipelago,
 			createIsland,
-			createIslander
+			createIslander,
+			createTurnipPrice
 		} = mutationResolvers(db)
 
 		const schema = buildSchema(schemaData);
@@ -75,6 +76,7 @@ MongoClient
 			createArchipelago: createArchipelago,
 			createIsland: createIsland,
 			createIslander: createIslander,
+			createTurnipPrice: createTurnipPrice,
 		};
 		const root = {
 			...query_resolvers,

@@ -50,6 +50,7 @@ type Mutation {
   createArchipelago(name: String!): Archipelago
   createIsland(name: String!, nativeFruit: String!, archipelagoId: String!): Island
   createIslander(name: String!, password: String!, islandId: String!, email: String!, avatarImage: String): Islander
+  createTurnipPrice(islandId: String!, price: Int!, date:String!): TurnipPrice
 }
 `;
 export default schemaData;
