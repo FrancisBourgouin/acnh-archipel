@@ -3,7 +3,10 @@
 
 name: PR
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -19,25 +22,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: yarn install
-        working-directory: ./backend
-        run: |
-          yarn install
-      - name: yarn test
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: |
+            ./backend
+            ./client
+      - name: Test backend
         working-directory: ./backend
         run: |
           yarn test
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: yarn install
-        working-directory: ./client
-        run: |
-          yarn install
-      - name: yarn test
+      - name: Test front-end
         working-directory: ./client
         run: |
           yarn test
