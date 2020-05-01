@@ -9,6 +9,12 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.gap-1 {
+    grid-gap: 0.5rem;
+}
+.gap-2 {
+    grid-gap: 1rem;
+}
 .gap-3 {
     grid-gap: 2rem;
 }
