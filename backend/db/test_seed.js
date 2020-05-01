@@ -1,7 +1,8 @@
 const { MongoClient, ObjectID } = require('mongodb');
 
 
-const url = 'mongodb://localhost:27017';
+const url = `mongodb://${process.env.WSL_HOST || "localhost"}:27017`;
+
 const dbName = 'archipelago_test';
 
 const turnipPrices = [...Array(30)].map(() => Math.floor(Math.random() * 500 + 50))
@@ -157,6 +158,7 @@ MongoClient
   .connect(url, { useUnifiedTopology: true })
   .then(client => {
     console.log("Connected successfully to server");
+
     const db = client.db(dbName);
     const archipelagos = db.collection('archipelagos')
     const islands = db.collection('islands')
@@ -169,6 +171,7 @@ MongoClient
       .then(() => islanders.drop())
       .then(() => console.log("Removed islanders collection"))
       .then(() => db.createCollection('archipelagos'))
+      // db.createCollection('archipelagos')
       .then(archipelagos => {
         console.log("Collection archipelagos created")
         return archipelagos

@@ -6,6 +6,8 @@ export default (db) => {
 	const archipelagos = db.collection('archipelagos')
 	const islands = db.collection('islands')
 	const islanders = db.collection('islanders')
+	const salt = bcrypt.genSaltSync(10);
+
 
 	const createArchipelago = async ({ name }) => {
 		const archipelagoInfo = {
