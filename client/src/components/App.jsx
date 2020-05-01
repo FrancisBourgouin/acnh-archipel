@@ -8,56 +8,60 @@ import Dashboard from "./Dashboard";
 import Header from "./Header";
 import Home from "./Home";
 import Login from "./Login";
+import Market from "./Market";
 import Profile from "./Profile";
 import Register from "./Register/Main";
 
 const client = createClient({
-    url: "/graphql",
+	url: "/graphql",
 });
 const App = () => {
-    const [user, setUser] = useState({});
+	const [user, setUser] = useState({});
 
-    useEffect(() => {
-        Axios.post("/auth/validation")
-            .then((res) => setUser(res.data))
-            .catch((err) => setUser({}));
-    }, []);
+	useEffect(() => {
+		Axios.post("/auth/validation")
+			.then((res) => setUser(res.data))
+			.catch((err) => setUser({}));
+	}, []);
 
-    return (
-        <Provider value={client}>
-            <Router>
-                <div className="App">
-                    <Header />
-                    <Switch>
-                        {user && (
-                            <Route exact path="/">
-                                <Home />
-                            </Route>
-                        )}
-                        <Route exact path="/dashboard">
-                            <Dashboard />
-                        </Route>
+	return (
+		<Provider value={client}>
+			<Router>
+				<div className="App">
+					<Header />
+					<Switch>
+						{!user && (
+							<Switch>
+								<Route exact path="/">
+									<Home />
+								</Route>
+								<Route exact path="/register">
+									<Register {...{ user, setUser }} />
+								</Route>
+								<Route exact path="/login">
+									<Login {...{ user, setUser }} />
+								</Route>
+							</Switch>
+						)}
 
-                        <Route exact path="/register">
-                            <Register {...{ user, setUser }} />
-                        </Route>
-                        <Route exact path="/login">
-                            <Login {...{ user, setUser }} />
-                        </Route>
-                        <Route exact path="/profile">
-                            <Profile />
-                        </Route>
-                        <Route exact path="/archipelago">
-                            <Archipelago />
-                        </Route>
-                        <Route exact path="/market">
-                            <Market />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </Provider>
-    );
+						<Route exact path="/">
+							<Dashboard />
+						</Route>
+
+						<Route exact path="/profile">
+							<Profile />
+						</Route>
+						<Route exact path="/archipelago">
+							<Archipelago />
+						</Route>
+						<Route exact path="/market">
+							<Market />
+						</Route>
+					</Switch>
+				</div>
+			</Router>
+		</Provider>
+	);
 };
 
 export default App;

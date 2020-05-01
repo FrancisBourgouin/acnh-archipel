@@ -1,0 +1,12 @@
+#dashboard {
+	@extend .flex-center;
+	@extend .flex-column;
+
+	#app-grid {
+		@extend .grid-3;
+		@extend .gap-3;
+		@extend .ph4;
+		@extend .mw6-ns;
+		@extend .w-100-ns;
+	}
+}

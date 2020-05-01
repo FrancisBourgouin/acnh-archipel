@@ -1,59 +1,67 @@
 {
-  "name": "client",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@storybook/addon-actions": "^5.3.18",
-    "@storybook/addon-links": "^5.3.18",
-    "@storybook/react": "^5.3.18",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/react-hooks": "^3.2.1",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.19.2",
-    "graphql": "^15.0.0",
-    "node-sass": "^4.13.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
-    "react-test-renderer": "^16.9.0",
-    "urql": "^1.9.7",
-    "tachyons-sass": "^4.9.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "lint": "eslint . --ignore-pattern '/node_modules/'",
-    "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@storybook/addons": "^5.3.18",
-    "@storybook/preset-create-react-app": "^2.1.1",
-    "cypress": "^4.3.0",
-    "eslint-config-airbnb": "^18.1.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^2.0.4"
-  },
-  "proxy": "http://localhost:3001/"
+	"name": "client",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@fortawesome/fontawesome-free": "^5.13.0",
+		"@storybook/addon-actions": "^5.3.18",
+		"@storybook/addon-links": "^5.3.18",
+		"@storybook/react": "^5.3.18",
+		"@testing-library/jest-dom": "^4.2.4",
+		"@testing-library/react": "^9.3.2",
+		"@testing-library/react-hooks": "^3.2.1",
+		"@testing-library/user-event": "^7.1.2",
+		"axios": "^0.19.2",
+		"graphql": "^15.0.0",
+		"node-sass": "^4.13.1",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "3.4.1",
+		"react-test-renderer": "^16.9.0",
+		"tachyons-sass": "^4.9.5",
+		"urql": "^1.9.7"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"lint": "eslint . --ignore-pattern '/node_modules/'",
+		"eject": "react-scripts eject",
+		"storybook": "start-storybook -p 9009 -s public",
+		"build-storybook": "build-storybook -s public"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@storybook/addons": "^5.3.18",
+		"@storybook/preset-create-react-app": "^2.1.1",
+		"cypress": "^4.3.0",
+		"eslint-config-airbnb": "^18.1.0",
+		"eslint-config-prettier": "^6.10.1",
+		"eslint-plugin-jsx-a11y": "^6.2.3",
+		"eslint-plugin-prettier": "^3.1.2",
+		"prettier": "^2.0.4"
+	},
+	"proxy": "http://localhost:3001/",
+	"prettier": {
+		"endOfLine": "lf",
+		"printWidth": 100,
+		"semi": true,
+		"trailingComma": "es5",
+		"useTabs": true
+	}
 }
