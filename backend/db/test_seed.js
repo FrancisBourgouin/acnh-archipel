@@ -4,10 +4,17 @@ const { MongoClient, ObjectID } = require('mongodb');
 const url = `mongodb://${process.env.WSL_HOST || "localhost"}:27017`;
 
 const dbName = 'archipelago_test';
+""
+const turnipPricesGen = () => [...Array(29)].map((_, i) => {
+  const price = Math.floor(Math.random() * 500 + 50)
+  const date = new Date(`${i + 1} April 2020`).toUTCString()
 
-const turnipPrices = [...Array(30)].map(() => Math.floor(Math.random() * 500 + 50))
-const turnipPrices1 = [...Array(30)].map(() => Math.floor(Math.random() * 500 + 50))
-const turnipPrices2 = [...Array(30)].map(() => Math.floor(Math.random() * 500 + 50))
+  return { price, date }
+})
+
+const turnipPrices = turnipPricesGen()
+const turnipPrices1 = turnipPricesGen()
+const turnipPrices2 = turnipPricesGen()
 
 const residents = ["Stinky", "Carol", "Graham"]
 const residents1 = ["Agnes", "Cranston", "Sydney"]
@@ -59,7 +66,7 @@ const islandList = [
     nativeFruit: "Apples",
     islanders: [new ObjectID("000008aed3fe2a61141d63e1")],
     residents: residents1,
-    turnipPrices: turnipPrices2,
+    turnipPrices: turnipPrices1,
     hotItem: ["Smoker"]
   },
   {
@@ -68,7 +75,7 @@ const islandList = [
     nativeFruit: "Oranges",
     islanders: [new ObjectID("00000d05d3fe2a61141d63e2")],
     residents: residents2,
-    turnipPrices: turnipPrices1,
+    turnipPrices: turnipPrices2,
     hotItem: ["Hearth"]
   }
 ]
