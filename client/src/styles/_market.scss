@@ -1,15 +1,47 @@
 .stalk-market {
     .card {
-        position: relative;
-        // display: grid;
-        // grid-template-columns: 1fr auto 2fr;
-        // align-items: center;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
 
-        .avatar {
-            @extend .w2;
-            @extend .h2;
-            @extend .br-100;
-            @extend .bg-primary-2;
+        .trend {
+            .peak-price {
+                background-color: var(--primary-1);
+
+                .star {
+                    clip-path: polygon(
+                        50% 0%,
+                        61% 35%,
+                        98% 35%,
+                        68% 57%,
+                        79% 91%,
+                        50% 70%,
+                        21% 91%,
+                        32% 57%,
+                        2% 35%,
+                        39% 35%
+                    );
+                }
+
+                .star-large {
+                    @extend .star;
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    background-color: var(--secondary-1);
+                }
+
+                .star-placeholder {
+                    @extend .star-large;
+                    width: 0;
+                    background-color: transparent;
+                }
+
+                .star-small {
+                    @extend .star;
+                    width: 1.25rem;
+                    height: 1.25rem;
+                    background-color: var(--secondary-1);
+                }
+            }
         }
 
         .icon-positive,
@@ -28,29 +60,6 @@
 
         .icon-neutral {
             @extend .mid-gray;
-        }
-
-        .high-price {
-            position: absolute;
-            top: -1rem;
-            left: 0.5rem;
-            background-color: var(--primary-1);
-
-            .star {
-                background-color: var(--tertiary-1);
-                clip-path: polygon(
-                    50% 0%,
-                    61% 35%,
-                    98% 35%,
-                    68% 57%,
-                    79% 91%,
-                    50% 70%,
-                    21% 91%,
-                    32% 57%,
-                    2% 35%,
-                    39% 35%
-                );
-            }
         }
     }
 }

@@ -1,11 +1,4 @@
-.ts-1 {
-    text-shadow: 1px 1px 4px var(--secondary-2);
-}
-
-.btn-shadow {
-    box-shadow: 0 2px 1px #00000044;
-}
-
+// Grid extensions
 .grid-3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -15,12 +8,28 @@
     grid-gap: 2rem;
 }
 
+// Flexbox extensions
 .flex-center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+// Font extensions
+.small-caps {
+    font-variant: small-caps;
+}
+
+// Shadow extensions
+.ts-1 {
+    text-shadow: 1px 1px 4px var(--secondary-2);
+}
+
+.btn-shadow {
+    box-shadow: 0 2px 1px #00000044;
+}
+
+// Animate/transition extensions
 .transition {
     transition: all 0.25s ease-out;
 }

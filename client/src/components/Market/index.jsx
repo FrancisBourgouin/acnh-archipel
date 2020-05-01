@@ -51,11 +51,11 @@ const Market = () => {
         {
             id: 5,
             name: "Ozu",
-            currentPrice: 367,
+            currentPrice: 222,
             rateOfChange: 148,
-            expectedTrend: "Small Spike",
+            expectedTrend: "Large Spike",
             hasPeak: true,
-            freshPrices: false,
+            freshPrices: true,
         },
         {
             id: 6,
@@ -77,82 +77,117 @@ const Market = () => {
         },
     ];
 
-    const renderPeakFlag = (expectedTrend) => {
+    const sortIslandsByPeak = () => {
+        return islands.sort((a, b) =>
+            a.currentPrice <= b.currentPrice ? 1 : -1
+        );
+    };
+
+    const renderIslandInfo = (island) => {
         return (
-            <div className="high-price pa1 br2 absolute flex items-center">
-                <div className="star w1 h1"></div>
-                <div className="f7 mh2 secondary-1">{expectedTrend} Peak</div>
+            <div className="flex-center">
+                <Link
+                    className="link dib flex-column"
+                    to={`/island/${island.id}`}
+                >
+                    <i className="pa2 mb2 f-subheadline fas fa-globe-europe secondary-1 bg-primary-1 br3"></i>
+                    <div className="mt1 ml2 primary-1 tc">{island.name}</div>
+                </Link>
+            </div>
+        );
+    };
+
+    const renderTrend = (expectedTrend, hasPeak) => {
+        return (
+            <div className="trend mb3 flex-center f6 primary-2 i tc nowrap br-pill">
+                {(hasPeak && (
+                    <div className="peak-price btn-shadow pa1 br2 flex items-center">
+                        <div
+                            className={`star-${
+                                expectedTrend.includes("Large")
+                                    ? "large"
+                                    : "small"
+                            }`}
+                        ></div>
+                        <div
+                            className={`peak-${
+                                expectedTrend.includes("Large")
+                                    ? "large"
+                                    : "small"
+                            } mh2 secondary-1 small-caps`}
+                        >
+                            {expectedTrend} Peak
+                        </div>
+                    </div>
+                )) ||
+                    expectedTrend}
+            </div>
+        );
+    };
+
+    const renderCurrentPrice = (currentPrice) => {
+        return (
+            <div className="mb3 primary-1 nowrap tc">
+                <i
+                    className={`pa2 bg-primary-1 br-100 fas fa-${
+                        currentPrice > 180
+                            ? "thumbs-up icon-positive"
+                            : currentPrice > 115
+                            ? "minus-circle icon-neutral"
+                            : "thumbs-down icon-negative"
+                    }`}
+                ></i>
+                {currentPrice} bells
+            </div>
+        );
+    };
+
+    const renderRateOfChange = (rateOfChange) => {
+        return (
+            <div className="primary-1 nowrap tc">
+                <i
+                    className={`bg-primary-1 mr2 pv1 ph2 br-100 fas ${
+                        rateOfChange > 40
+                            ? "fa-angle-double-up dark-green"
+                            : rateOfChange > 0
+                            ? "fa-angle-up dark-green"
+                            : rateOfChange < -40
+                            ? "fa-angle-double-down tertiary-1"
+                            : "fa-angle-down tertiary-1"
+                    }`}
+                ></i>
+                <span className="f6">{rateOfChange}</span> bells
             </div>
         );
     };
 
     const renderCard = (stalePrices = false) => {
-        return islands
+        return sortIslandsByPeak()
             .filter((island) => stalePrices !== island.freshPrices)
             .map((island, i) => (
-                <Link
-                    className="link w-100 mw9-l mt3 pt2"
-                    to={`/island/${island.id}`}
-                >
-                    <div className="card flex justify-between w-100 ph3 bg-secondary-1 hover-bg-secondary-2 transition br4-l">
-                        {island.hasPeak && renderPeakFlag(island.expectedTrend)}
-
-                        <div className="flex items-center">
-                            <i className="fas fa-globe-europe secondary-1 bg-primary-1 pa1 br-100"></i>
-                            <div className="ml2 primary-1">{island.name}</div>
-                        </div>
-
-                        <div className="flex flex-column flex-row-ns pv2 justify-end-ns items-baseline flex-auto-ns">
-                            <div className="pa2 br3 primary-1 nowrap tc flex-auto">
-                                <i
-                                    className={`bg-primary-1 pa1 br-100 fas fa-${
-                                        island.currentPrice > 180
-                                            ? "thumbs-up icon-positive"
-                                            : island.currentPrice > 115
-                                            ? "minus-circle icon-neutral"
-                                            : "thumbs-down icon-negative"
-                                    }`}
-                                ></i>
-                                {island.currentPrice} bells
-                            </div>
-                            <div className="pa2 br3 primary-1 nowrap tc">
-                                <i
-                                    className={`bg-primary-1 mr2 pv1 ph2 br-100 fas ${
-                                        island.rateOfChange > 40
-                                            ? "fa-angle-double-up dark-green"
-                                            : island.rateOfChange > 0
-                                            ? "fa-angle-up dark-green"
-                                            : island.rateOfChange < -40
-                                            ? "fa-angle-double-down tertiary-1"
-                                            : "fa-angle-down tertiary-1"
-                                    }`}
-                                ></i>
-                                {island.rateOfChange} bells
-                            </div>
-                            <div className="w-100 w-auto-ns pa2 br3 f6 primary-2 i nowrap br-pill tc">
-                                {island.expectedTrend}
-                            </div>
-                        </div>
+                <div className="card w-100 mw6-ns mt3 pv2 ph3 bg-secondary-1 hover-bg-secondary-2 br4-ns transition">
+                    <div className="mv2">{renderIslandInfo(island)}</div>
+                    <div className="flex flex-column justify-center items-start mv2">
+                        {renderTrend(island.expectedTrend, island.hasPeak)}
+                        {renderCurrentPrice(island.currentPrice)}
+                        {renderRateOfChange(island.rateOfChange)}
                     </div>
-                </Link>
+                </div>
             ));
     };
+
     return (
         <main>
-            <header className="pv3">
+            <header className="mv4">
                 <h1 className="tc secondary-1">Turnip Marketplace</h1>
             </header>
 
-            <section className="stalk-market flex-center flex-column">
-                <h2 className="pv3 ph3 secondary-1">Fresh Prices</h2>
-                <div className="flex-center flex-column w-100 mw7-l">
-                    {renderCard()}
-                </div>
+            <section className="stalk-market  flex-center flex-column">
+                <h2 className="mv2 ph3 secondary-1">Fresh Prices</h2>
+                {renderCard()}
 
-                <h2 className="mt4 pv3 ph3 secondary-1">Stale Prices</h2>
-                <div className="flex-center flex-column w-100 mw7-l">
-                    {renderCard(true)}
-                </div>
+                <h2 className="mt5 mb2 ph3 secondary-1">Stale Prices</h2>
+                {renderCard(true)}
             </section>
 
             <section></section>
