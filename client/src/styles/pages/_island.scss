@@ -2,10 +2,8 @@
 	@extend .flex-center;
 	@extend .flex-column;
 
-	#card {
-		@extend .flex-center;
-		@extend .flex-column;
-		@extend .pv3;
+	.card {
+		@extend .pv4;
 		@extend .ph4;
 		@extend .br3;
 		@extend .w-100;

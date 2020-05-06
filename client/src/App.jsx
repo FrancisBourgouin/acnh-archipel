@@ -2,9 +2,6 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createClient, Provider, useQuery } from "urql";
-import { getArchipelagoByIslanderId } from "../graphqlQueries";
-import { ArchipelagoContext } from "../hooks/ArchipelagoContext";
-import { UserContext } from "../hooks/UserContext";
 import {
 	Archipelago,
 	Dashboard,
@@ -16,6 +13,10 @@ import {
 	Profile,
 	Register,
 } from "./components";
+import { getArchipelagoByIslanderId } from "./graphqlQueries";
+import { ArchipelagoContext } from "./hooks/ArchipelagoContext";
+import { UserContext } from "./hooks/UserContext";
+import "./styles/App.scss";
 
 const client = createClient({
 	url: "/graphql",

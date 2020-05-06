@@ -6,6 +6,6 @@ import Island from "./Island";
 import Login from "./Login";
 import Market from "./Market";
 import Profile from "./Profile";
-import Register from "./Register/Main";
+import Register from "./Register";
 
 export { Archipelago, Dashboard, Header, Home, Island, Login, Market, Profile, Register };
