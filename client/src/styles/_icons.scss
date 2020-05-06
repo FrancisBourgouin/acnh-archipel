@@ -1,0 +1,124 @@
+.icon {
+	@extend .fas;
+
+	/////// DASHBOARD ////
+	&.passport-app {
+		@extend .f-subheadline;
+		@extend .light-gray;
+		@extend .fa-address-card;
+	}
+
+	/////// MARKET ///////
+
+	// CurrentPrice icon
+	&.price-positive,
+	&.price-neutral,
+	&.price-negative {
+		@extend .mr2;
+		@extend .pa2;
+		@extend .br-100;
+		@extend .bg-primary-1;
+	}
+
+	&.price-positive {
+		@extend .dark-green;
+		@extend .fa-thumbs-up;
+	}
+
+	&.price-negative {
+		@extend .tertiary-1;
+		@extend .fa-thumbs-down;
+	}
+
+	&.price-neutral {
+		@extend .mid-gray;
+		@extend .fa-minus-circle;
+	}
+
+	&.change-big-up,
+	&.change-small-up,
+	&.change-big-down,
+	&.change-small-down {
+		@extend .mr2;
+		@extend .pv1;
+		@extend .ph2;
+		@extend .bg-primary-1;
+		@extend .br-100;
+	}
+
+	&.change-big-up {
+		@extend .fa-angle-double-up;
+		@extend .dark-green;
+	}
+	&.change-small-up {
+		@extend .fa-angle-up;
+		@extend .dark-green;
+	}
+	&.change-big-down {
+		@extend .fa-angle-double-down;
+		@extend .tertiary-1;
+	}
+	&.change-small-down {
+		@extend .fa-angle-down;
+		@extend .tertiary-1;
+	}
+}
+
+.star {
+	clip-path: polygon(
+		50% 0%,
+		61% 35%,
+		98% 35%,
+		68% 57%,
+		79% 91%,
+		50% 70%,
+		21% 91%,
+		32% 57%,
+		2% 35%,
+		39% 35%
+	);
+}
+
+.star-large {
+	@extend .star;
+	width: 1.5rem;
+	height: 1.5rem;
+	background-color: var(--secondary-1);
+}
+
+.star-placeholder {
+	@extend .star-large;
+	width: 0;
+	background-color: transparent;
+}
+
+.star-small {
+	@extend .star;
+	width: 1.25rem;
+	height: 1.25rem;
+	background-color: var(--secondary-1);
+}
+
+.island-avatar-placeholder {
+	@extend .f-subheadline;
+	@extend .fas;
+	@extend .fa-globe-europe;
+	@extend .secondary-1;
+	@extend .bg-primary-1;
+	@extend .pa2;
+	@extend .br3;
+}
+
+.dashboard-app {
+	@extend .flex-center;
+	@extend .w3;
+	@extend .h3;
+	@extend .w4-ns;
+	@extend .h4-ns;
+	@extend .pa2;
+	@extend .br4;
+	@extend .bg-light-silver;
+	@extend .hover-bg-moon-gray;
+	@extend .grow;
+	@extend .transition;
+}

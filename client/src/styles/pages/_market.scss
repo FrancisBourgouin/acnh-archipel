@@ -1,0 +1,51 @@
+#stalk-market {
+	#fresh-cards,
+	#stale-cards {
+		@extend .flex-center;
+		@extend .flex-column;
+		@extend .w-100;
+		@extend .w-auto-ns;
+
+		.card {
+			@extend .w-100;
+			@extend .grid-1-1;
+			@extend .mw6-ns;
+			@extend .pa3;
+			@extend .bg-secondary-1;
+			@extend .hover-bg-secondary-2;
+			@extend .br4-ns;
+			@extend .transition;
+
+			.turnip-data {
+				@extend .flex;
+				@extend .flex-column;
+				@extend .justify-center;
+				@extend .items-start;
+
+				.trend {
+					@extend .flex-center;
+					@extend .f6;
+					@extend .primary-2;
+					@extend .i;
+					@extend .tc;
+					@extend .nowrap;
+
+					& > .peak {
+						@extend .flex;
+						@extend .items-center;
+						@extend .pa1;
+						@extend .br2;
+						@extend .bg-primary-1;
+						@extend .btn-shadow;
+
+						.peak-large,
+						.peak-small {
+							@extend .secondary-1;
+							@extend .small-caps;
+						}
+					}
+				}
+			}
+		}
+	}
+}
