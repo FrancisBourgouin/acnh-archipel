@@ -27,6 +27,19 @@ const Navigation = () => {
 		},
 	];
 
+	const renderNavItems = () => {
+		return navRoutes.map(
+			(route, i) =>
+				!route.loggedOut && (
+					<li key={"nav-link-" + i} className="mr2 mr3-ns">
+						<Link className="f4-ns ph1 ph2-ns pv2 link primary-2 hover-primary-1" to={route.to}>
+							{route.label}
+						</Link>
+					</li>
+				)
+		);
+	};
+
 	return (
 		<nav className="bg-secondary-1 ma0 pa2">
 			<ul className="flex justify-between items-center list">
@@ -36,21 +49,7 @@ const Navigation = () => {
 					</Link>
 				</aside>
 
-				<main className="flex">
-					{navRoutes.map(
-						(route, i) =>
-							!route.loggedOut && (
-								<li key={"nav-link-" + i} className="mr2 mr3-ns">
-									<Link
-										className="f4-ns ph1 ph2-ns pv2 link primary-2 hover-primary-1"
-										to={route.to}
-									>
-										{route.label}
-									</Link>
-								</li>
-							)
-					)}
-				</main>
+				<main className="flex">{renderNavItems()}</main>
 			</ul>
 		</nav>
 	);

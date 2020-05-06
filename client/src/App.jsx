@@ -5,14 +5,18 @@ import { createClient, Provider, useQuery } from "urql";
 import { getArchipelagoByIslanderId } from "../graphqlQueries";
 import { ArchipelagoContext } from "../hooks/ArchipelagoContext";
 import { UserContext } from "../hooks/UserContext";
-import "../styles/App.scss";
-import Archipelago from "./Archipelago";
-import Header from "./Header";
-import Home from "./Home";
-import Login from "./Login";
-import Market from "./Market";
-import Profile from "./Profile";
-import Register from "./Register";
+import {
+	Archipelago,
+	Dashboard,
+	Header,
+	Home,
+	Island,
+	Login,
+	Market,
+	Profile,
+	Register,
+} from "./components";
+
 const client = createClient({
 	url: "/graphql",
 });

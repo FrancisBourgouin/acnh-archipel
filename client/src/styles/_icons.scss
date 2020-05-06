@@ -3,7 +3,8 @@
 
 	/////// DASHBOARD ////
 	&.passport-app {
-		@extend .f-subheadline;
+		@extend .f-subheadline-ns;
+		@extend .f2;
 		@extend .light-gray;
 		@extend .fa-address-card;
 	}
