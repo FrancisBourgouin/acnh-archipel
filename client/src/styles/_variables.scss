@@ -1,12 +1,17 @@
 @font-face {
-    font-family: "FinkHeavyWeb";
-    src: url("./fonts/FinkHeavy.otf");
+	font-family: "FinkHeavyWeb";
+	src: url("./fonts/FinkHeavy.otf");
 }
 
 .fink {
-    font-family: "FinkHeavyWeb";
-    letter-spacing: 0.1em;
-    -webkit-text-fill-color: var(--primary-1);
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: var(--secondary-2);
+	font-family: "FinkHeavyWeb";
+	letter-spacing: 0.1em;
+	-webkit-text-fill-color: var(--primary-1);
+	-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: var(--secondary-2);
+}
+
+.primary-label {
+	@extend .primary-1;
+	@extend .nowrap;
 }
