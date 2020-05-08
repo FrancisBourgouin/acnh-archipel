@@ -1,21 +1,21 @@
 import cookieSession from "cookie-session";
 import express from "express";
 import graphqlHTTP from "express-graphql";
-import { buildSchema } from "graphql";
+import { buildSchema, GraphQLSchema, } from "graphql";
+import { importSchema } from 'graphql-import'
 import { MongoClient } from 'mongodb';
 import logger from "morgan";
 import path from "path";
 import mutationResolvers from "./helpers/mutationResolvers";
 import queryResolvers from "./helpers/queryResolvers";
-import schemaData from "./helpers/schema";
 import authRouter from "./routes/authRouter";
 
 const url = `mongodb://${process.env.WSL_HOST || "localhost"}:27017`;
 const dbName = 'archipelago_test';
-
-
-
+const schemaData = importSchema('schema.gql');
+const schema = buildSchema(schemaData);
 const app = express();
+
 app.set("trust proxy", 1);
 
 app.use(logger("dev"));
@@ -34,9 +34,6 @@ app.get("/", function (req, res, next) {
 		"Hello. \n '/graphql' for the GraphQL endpoint \n '/auth' for authentication / registration"
 	);
 });
-
-
-
 
 MongoClient
 	.connect(url, { useUnifiedTopology: true })
@@ -60,8 +57,6 @@ MongoClient
 			createIslander,
 			createTurnipPrice
 		} = mutationResolvers(db)
-
-		const schema = buildSchema(schemaData);
 
 		const query_resolvers = {
 			archipelagos: fetchArchipelagos,

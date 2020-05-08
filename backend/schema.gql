@@ -1,13 +1,14 @@
-const schemaData = `
-"""
+  """
 Archipelago info (id, name, [islands]), searchable by archipelagoId or islanderId
 """
+
 type Archipelago {
+
   _id: String
   name: String
+  islands: [Island]
   friendsOnly: Boolean
   inviteCode: String
-  islands : [Island]
 }
 """
 Island info ( id, name, nativeFruit, turnipPrice, [islanders]), searchable by islandId
@@ -52,5 +53,3 @@ type Mutation {
   createIslander(name: String!, password: String!, islandId: String!, email: String!, avatarImage: String): Islander
   createTurnipPrice(islandId: String!, price: Int!, date:String!): TurnipPrice
 }
-`;
-export default schemaData;
