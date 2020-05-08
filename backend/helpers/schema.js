@@ -6,7 +6,7 @@ type Archipelago {
   _id: String
   name: String
   friendsOnly: Boolean
-  friendInvites: [String]
+  inviteCode: String
   islands : [Island]
 }
 """

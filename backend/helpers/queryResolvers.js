@@ -5,14 +5,14 @@ export default (db) => {
 	const islands = db.collection('islands')
 	const islanders = db.collection('islanders')
 
-	const fetchArchipelagoInfo = async ({ archipelagoId, islanderId, email }) => {
+	const fetchArchipelagoInfo = async ({ archipelagoId, islanderId, inviteCode }) => {
 		const search = {}
 		if (archipelagoId) {
 			search._id = new ObjectID.createFromHexString(archipelagoId)
 		} else if (islanderId) {
 			search["islands.islanders"] = new ObjectID.createFromHexString(islanderId)
 		} else {
-			search.friendInvites = email
+			search.inviteCode = inviteCode
 		}
 		const result =
 			await archipelagos
