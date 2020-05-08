@@ -1,7 +1,6 @@
-  """
+"""
 Archipelago info (id, name, [islands]), searchable by archipelagoId or islanderId
 """
-
 type Archipelago {
 
   _id: String
