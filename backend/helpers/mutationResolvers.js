@@ -14,7 +14,7 @@ export default (db) => {
 			_id: new ObjectID(),
 			name,
 			friendsOnly: true,
-			friendInvites: [],
+			inviteCode: "",
 			islands: []
 		}
 

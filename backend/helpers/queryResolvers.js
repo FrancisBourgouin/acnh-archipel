@@ -75,8 +75,13 @@ export default (db) => {
 		return result[0]
 	}
 
-	const fetchIslanderInfo = async ({ islanderId }) => {
-		const search = { "_id": new ObjectID.createFromHexString(islanderId) }
+	const fetchIslanderInfo = async ({ islanderId, email }) => {
+		const search = {}
+		if (islanderId) {
+			search._id = new ObjectID.createFromHexString(islanderId)
+		} else {
+			search.email = email
+		}
 		const result =
 			await islanders
 				.aggregate([
