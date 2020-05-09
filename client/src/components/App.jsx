@@ -1,7 +1,8 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createClient, Provider } from "urql";
+import { createClient, Provider, useQuery } from "urql";
+import { getArchipelagoByIslanderId } from "../graphqlQueries";
 import "../styles/App.scss";
 import Archipelago from "./Archipelago";
 import Dashboard from "./Dashboard";
@@ -10,19 +11,32 @@ import Home from "./Home";
 import Login from "./Login";
 import Market from "./Market";
 import Profile from "./Profile";
-import Register from "./Register/Main";
-
+import Register from "./Register";
 const client = createClient({
 	url: "/graphql",
 });
+
 const App = () => {
 	const [user, setUser] = useState({});
+	const [archipelago, setArchipelago] = useState({});
+	const { islanderId } = user
+	const [archipelagoResult, archipelagoQuery] = useQuery({
+		query: getArchipelagoByIslanderId,
+		variables: { islanderId: islanderId },
+		pause: !islanderId
+	})
 
 	useEffect(() => {
 		Axios.post("/auth/validation")
 			.then((res) => setUser(res.data))
 			.catch((err) => setUser({}));
 	}, []);
+
+	useEffect(() => {
+		const fetchedArchipelagoResult = archipelagoResult.data && archipelagoResult.data.archipelago
+		console.log(archipelagoResult)
+		setArchipelago(fetchedArchipelagoResult)
+	}, [archipelagoResult])
 
 	return (
 		<Provider value={client}>
