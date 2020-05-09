@@ -35,9 +35,18 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		const fetchedArchipelagoResult = archipelagoResult.data && archipelagoResult.data.archipelago
-		console.log(archipelagoResult)
-		setArchipelago(fetchedArchipelagoResult)
+		const fetchedArchipelagoResult = archipelagoResult?.data?.archipelago
+		if (fetchedArchipelagoResult && islanderId) {
+			fetchedArchipelagoResult.islands.forEach(island => {
+				island.islanders.forEach(({ _id }) => {
+					if (_id === islanderId) {
+						setUser({ ...user, islandId: island._id, archipelagoId: fetchedArchipelagoResult._id })
+					}
+				})
+			})
+			setArchipelago(fetchedArchipelagoResult)
+		}
+
 	}, [archipelagoResult])
 
 	return (
