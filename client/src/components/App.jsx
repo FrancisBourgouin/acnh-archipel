@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createClient, Provider, useQuery } from "urql";
 import { getArchipelagoByIslanderId } from "../graphqlQueries";
+import { ArchipelagoContext } from "../hooks/ArchipelagoContext";
+import { UserContext } from "../hooks/UserContext";
 import "../styles/App.scss";
 import Archipelago from "./Archipelago";
 import Dashboard from "./Dashboard";
@@ -39,38 +41,42 @@ const App = () => {
 	}, [archipelagoResult])
 
 	return (
-		<Provider value={client}>
-			<Router>
-				<div className="App">
-					<Header />
-					<Switch>
-						<Route exact path="/">
-							<Home />
-						</Route>
-						<Route exact path="/register">
-							<Register {...{ user, setUser }} />
-						</Route>
-						<Route exact path="/login">
-							<Login {...{ user, setUser }} />
-						</Route>
+		<UserContext.Provider value={user} >
+			<ArchipelagoContext.Provider value={archipelago} >
+				<Provider value={client}>
+					<Router>
+						<div className="App">
+							<Header />
+							<Switch>
+								<Route exact path="/">
+									<Home />
+								</Route>
+								<Route exact path="/register">
+									<Register {...{ user, setUser }} />
+								</Route>
+								<Route exact path="/login">
+									<Login {...{ user, setUser }} />
+								</Route>
 
-						<Route exact path="/dashboard">
-							<Dashboard />
-						</Route>
+								<Route exact path="/dashboard">
+									<Dashboard />
+								</Route>
 
-						<Route exact path="/profile">
-							<Profile />
-						</Route>
-						<Route exact path="/archipelago">
-							<Archipelago />
-						</Route>
-						<Route exact path="/market">
-							<Market />
-						</Route>
-					</Switch>
-				</div>
-			</Router>
-		</Provider>
+								<Route exact path="/profile">
+									<Profile />
+								</Route>
+								<Route exact path="/archipelago">
+									<Archipelago />
+								</Route>
+								<Route exact path="/market">
+									<Market />
+								</Route>
+							</Switch>
+						</div>
+					</Router>
+				</Provider>
+			</ArchipelagoContext.Provider>
+		</UserContext.Provider>
 	);
 };
 
