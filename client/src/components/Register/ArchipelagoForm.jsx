@@ -31,12 +31,11 @@ export default (props) => {
 
   return (
     <section>
-      {!archipelago && <h2>Great! Now enter your archipelago information</h2>}
-      {archipelago && <h3>You are already invited to the {archipelago.name} archipelago, great !</h3>}
-      {!archipelago && <form onSubmit={event => handleSubmit(event, parsedFormData)}>
+      <h2>Great! Now enter your archipelago information</h2>
+      <form onSubmit={event => handleSubmit(event, parsedFormData)}>
         {inputFields}
         <button type="submit">Register</button>
-      </form>}
+      </form>
     </section>
   );
 }

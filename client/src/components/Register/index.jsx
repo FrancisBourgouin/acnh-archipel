@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "urql";
+import { archipelagoSummaryByInviteCode, createArchipelagoQuery, createIslanderQuery, createIslandQuery } from "../../graphqlQueries";
 import "../../styles/Registration.scss";
 import ArchipelagoForm from "./ArchipelagoForm";
 import IslanderForm from "./IslanderForm";
@@ -7,40 +9,8 @@ import IslandForm from "./IslandForm";
 
 
 
-const createIslanderQuery = `
-	mutation($name: String!, $islandId: String!, $password: String!, $email: String!){
-		createIslander(name:$name, islandId:$islandId, password:$password, email:$email) {
-			_id
-			name
-		}
-	}
-`;
-const createIslandQuery = `
-	mutation($name: String!, $nativeFruit: String!, $archipelagoId: String!){
-		createIsland(name:$name, nativeFruit:$nativeFruit, archipelagoId:$archipelagoId) {
-			_id
-			name
-		}
-	}
-`;
-const createArchipelagoQuery = `
-	mutation($name: String!){
-		createArchipelago(name:$name) {
-			_id
-			name
-		}
-	}
-`;
-
-const archipelagoByEmail = `
-	query($email: String!){
-		archipelago(email: $email) {
-			_id
-			name
-		}
-	}
-`
 export default (props) => {
+	const history = useHistory()
 	const [registration, setRegistration] = useState({
 		islander: null,
 		island: null,
@@ -48,14 +18,14 @@ export default (props) => {
 		complete: false
 	})
 	const { islander, island, archipelago, complete } = registration
-	const islanderEmail = islander ? islander.email : null
+	const islanderInviteCode = islander ? islander.inviteCode : null
 	const [, createIslander] = useMutation(createIslanderQuery)
 	const [, createIsland] = useMutation(createIslandQuery)
 	const [, createArchipelago] = useMutation(createArchipelagoQuery)
 	const [archipelagoResult, archipelagoQuery] = useQuery({
-		query: archipelagoByEmail,
-		variables: { email: islanderEmail },
-		pause: !islanderEmail
+		query: archipelagoSummaryByInviteCode,
+		variables: { inviteCode: islanderInviteCode },
+		pause: !islanderInviteCode
 	})
 
 	const fetchedArchipelagoResult = archipelagoResult.data && archipelagoResult.data.archipelago
@@ -75,11 +45,11 @@ export default (props) => {
 	}
 	const handleIsland = (event, island) => {
 		event.preventDefault()
-		setRegistration({ ...registration, island })
+		setRegistration({ ...registration, island, /* complete: archipelago */ })
 	}
 	const handleArchipelago = (event, archipelago) => {
 		event.preventDefault()
-		setRegistration({ ...registration, archipelago, complete: true })
+		setRegistration({ ...registration, archipelago, /* complete: true */ })
 	}
 	const executeQueries = () => {
 		if (archipelago._id) {
@@ -89,6 +59,7 @@ export default (props) => {
 					const islandId = result.data.createIsland._id
 					return createIslander({ ...islander, islandId })
 				})
+				.then(() => history.push('/dashboard'))
 		} else {
 			createArchipelago(archipelago)
 				.then(result => {
@@ -100,6 +71,7 @@ export default (props) => {
 					const islandId = result.data.createIsland._id
 					return createIslander({ ...islander, islandId })
 				})
+				.then(() => history.push('/dashboard'))
 
 		}
 	}
@@ -111,7 +83,8 @@ export default (props) => {
 
 			{!complete && <IslanderForm handleSubmit={handleIslander} />}
 			{!complete && islander && <IslandForm handleSubmit={handleIsland} />}
-			{!complete && island && <ArchipelagoForm handleSubmit={handleArchipelago} archipelago={archipelago} />}
+			{!complete && island && !archipelago && <ArchipelagoForm handleSubmit={handleArchipelago} archipelago={archipelago} />}
+			{!complete && island && archipelago && <h3>You are already invited to the {archipelago.name} archipelago, great !</h3>}
 			{islander && island && archipelago &&
 				<button onClick={executeQueries}>Join in !</button>
 			}

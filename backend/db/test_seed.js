@@ -151,7 +151,7 @@ const archipelago = {
   _id: new ObjectID("5ea33f81b7394d525ad37fe9"),
   name: "Covidian Montréal Consortium",
   friendsOnly: true,
-  friendInvites: ["invite@archipelago.com"],
+  inviteCode: "BADA55",
   islands: [
     new ObjectID("5ea22201b7394d525ad37bb9"),
     new ObjectID("5ea12f01b7234d525ad37bb9"),

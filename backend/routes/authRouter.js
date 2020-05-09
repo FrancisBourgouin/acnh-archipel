@@ -9,8 +9,8 @@ export default (db) => {
 	auth.post("/validation", (req, res, next) => {
 		findUserById(req.session.userId)
 			.then(user => {
-				const { name, email, id } = user;
-				res.json({ name, email, id });
+				const { name, email, _id, avatarImage, recipes } = user;
+				res.json({ name, email, islanderId: _id, avatarImage, recipes });
 
 			})
 			.catch(() => res.status(403).send("Invalid request"));
@@ -20,8 +20,8 @@ export default (db) => {
 		validateUser(req.body.email, req.body.password)
 			.then((user) => {
 				req.session.userId = user._id;
-				const { name, email, id } = user;
-				res.json({ name, email, id });
+				const { name, email, _id, avatarImage, recipes } = user;
+				res.json({ name, email, islanderId: _id, avatarImage, recipes });
 			})
 			.catch(() => {
 				res.status(403).json({});
