@@ -25,7 +25,7 @@ export function getDays() {
 
 export function getCurrentDateTime() {
 	const currentDate = new Date();
-	const hours = currentDate.getHours();
+	const hour = currentDate.getHours();
 
-	return { day: currentDate, time: hours >= 12 ? "pm" : "am" };
+	return { date: currentDate, timeOfDay: hour >= 12 ? "pm" : "am" };
 }
