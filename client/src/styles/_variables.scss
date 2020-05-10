@@ -1,3 +1,21 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: "Arial Rounded MT Bold";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	&#body {
+		background-color: var(--primary-2);
+	}
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
 @font-face {
 	font-family: "FinkHeavyWeb";
 	src: url("./fonts/FinkHeavy.otf");

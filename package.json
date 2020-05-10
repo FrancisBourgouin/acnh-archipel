@@ -7,7 +7,9 @@
         "init": "cd client && yarn && cd ../backend && yarn",
         "dev": "concurrently \"yarn run client\" \"yarn run server\"",
         "client": "cd client; yarn start",
-        "server": "cd backend; yarn run dev"
+        "server": "cd backend; yarn run dev",
+        "seed-db": "cd backend; yarn run seed-db",
+        "mongo": "cd backend; yarn run db"
     },
     "repository": {
         "type": "git",

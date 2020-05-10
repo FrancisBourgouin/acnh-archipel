@@ -1,0 +1,18 @@
+#island {
+	@extend .flex-center;
+	@extend .flex-column;
+
+	.card {
+		@extend .pv4;
+		@extend .ph4;
+		@extend .br3;
+		@extend .w-100;
+		@extend .mw6;
+		@extend .bg-secondary-1;
+
+		#residents {
+			@extend .grid-1-1;
+			@extend .gap-2;
+		}
+	}
+}

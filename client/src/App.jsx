@@ -2,18 +2,22 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createClient, Provider, useQuery } from "urql";
-import { getArchipelagoByIslanderId } from "../graphqlQueries";
-import { ArchipelagoContext } from "../hooks/ArchipelagoContext";
-import { UserContext } from "../hooks/UserContext";
-import "../styles/App.scss";
-import Archipelago from "./Archipelago";
-import Dashboard from "./Dashboard";
-import Header from "./Header";
-import Home from "./Home";
-import Login from "./Login";
-import Market from "./Market";
-import Profile from "./Profile";
-import Register from "./Register";
+import {
+	Archipelago,
+	Dashboard,
+	Header,
+	Home,
+	Island,
+	Login,
+	Market,
+	Profile,
+	Register,
+} from "./components";
+import { getArchipelagoByIslanderId } from "./graphqlQueries";
+import { ArchipelagoContext } from "./hooks/ArchipelagoContext";
+import { UserContext } from "./hooks/UserContext";
+import "./styles/App.scss";
+
 const client = createClient({
 	url: "/graphql",
 });
@@ -21,12 +25,12 @@ const client = createClient({
 const App = () => {
 	const [user, setUser] = useState({});
 	const [archipelago, setArchipelago] = useState({});
-	const { islanderId } = user
+	const { islanderId } = user;
 	const [archipelagoResult, archipelagoQuery] = useQuery({
 		query: getArchipelagoByIslanderId,
 		variables: { islanderId: islanderId },
-		pause: !islanderId
-	})
+		pause: !islanderId,
+	});
 
 	useEffect(() => {
 		Axios.post("/auth/validation")
@@ -35,23 +39,22 @@ const App = () => {
 	}, []);
 
 	useEffect(() => {
-		const fetchedArchipelagoResult = archipelagoResult?.data?.archipelago
+		const fetchedArchipelagoResult = archipelagoResult?.data?.archipelago;
 		if (fetchedArchipelagoResult && islanderId) {
-			fetchedArchipelagoResult.islands.forEach(island => {
+			fetchedArchipelagoResult.islands.forEach((island) => {
 				island.islanders.forEach(({ _id }) => {
 					if (_id === islanderId) {
-						setUser({ ...user, islandId: island._id, archipelagoId: fetchedArchipelagoResult._id })
+						setUser({ ...user, islandId: island._id, archipelagoId: fetchedArchipelagoResult._id });
 					}
-				})
-			})
-			setArchipelago(fetchedArchipelagoResult)
+				});
+			});
+			setArchipelago(fetchedArchipelagoResult);
 		}
-
-	}, [archipelagoResult])
+	}, [archipelagoResult]);
 
 	return (
-		<UserContext.Provider value={user} >
-			<ArchipelagoContext.Provider value={archipelago} >
+		<UserContext.Provider value={user}>
+			<ArchipelagoContext.Provider value={archipelago}>
 				<Provider value={client}>
 					<Router>
 						<div className="App">
@@ -80,6 +83,11 @@ const App = () => {
 								<Route exact path="/market">
 									<Market />
 								</Route>
+								<Switch>
+									<Route path="/island/:id">
+										<Island />
+									</Route>
+								</Switch>
 							</Switch>
 						</div>
 					</Router>

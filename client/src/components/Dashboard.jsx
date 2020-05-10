@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../styles/loggedIn.scss";
 import { ChatIcon, IslandSearchIcon, MarketIcon, MarketUpdateIcon } from "../svgs/MobIsleAppIcons";
 
 export default () => {
