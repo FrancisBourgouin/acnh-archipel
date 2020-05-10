@@ -109,6 +109,21 @@
 	@extend .pa2;
 	@extend .br3;
 }
+.island-avatar-placeholder-small {
+	@extend .f4;
+	@extend .fas;
+	@extend .fa-globe-europe;
+}
+
+.passport-avatar-placeholder {
+	@extend .f-subheadline;
+	@extend .fas;
+	@extend .fa-user;
+	@extend .secondary-1;
+	@extend .bg-primary-1;
+	@extend .pa2;
+	@extend .br3;
+}
 
 .dashboard-app {
 	@extend .flex-center;

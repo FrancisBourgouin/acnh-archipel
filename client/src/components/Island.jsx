@@ -37,12 +37,14 @@ const Island = () => {
 	const renderResidents = () => {
 		return islanders.map((islander, i) => {
 			return (
-				<Link to="/profile">
-					<div className="flex items-center primary-1 pv2" key={`resident-${i}`}>
-						<div className="w2 h2 mr3 bg-primary-1 br-100"></div>
-						{islander.name}
-					</div>
-				</Link>
+				<li>
+					<Link className="link" to="/profile">
+						<div className="flex items-center primary-1 pv2" key={`resident-${i}`}>
+							<div className="w2 h2 mr3 bg-primary-1 br-100"></div>
+							{islander.name}
+						</div>
+					</Link>
+				</li>
 			);
 		});
 	};
@@ -77,21 +79,32 @@ const Island = () => {
 		<main id="island" className="ma4 pt3">
 			<section className="card flex-column">
 				<header className="mb4 tc primary-1">
-					<h1 className="ma0">Malos</h1>
+					<h2 className="ma0">Malos</h2>
 				</header>
-				<div className="mb4-ns mb3 pb3 grid-1-1">
+				<div className="mb4-ns mb3 pb3 grid-1-1-ns flex-column flex-center flex-wrap">
 					<div>
 						<i className="mb2 island-avatar-placeholder"></i>
 					</div>
-					<div className="flex flex-column">
-						<span className="primary-2 mb2">Apples</span>
-						<span className="primary-2 mb2">Windflowers & Tulips</span>
-						<div className="primary-2 nowrap">Northern Hemisphere</div>
+					<div className="flex flex-column primary-2">
+						<div className="flex justify-between">
+							<span className="mr4">Island Fruit</span>
+							<span className="primary-1 mb2">Apples</span>
+						</div>
+						<div className="flex justify-between nowrap">
+							<span className="mr4">Primary Flowers</span>
+							<span className="primary-1 mb2">Windflowers & Tulips</span>
+						</div>
+						<div className="flex justify-between nowrap">
+							<span className="mr4">Hemisphere</span>
+							<span className="primary-1 nowrap">Northern</span>
+						</div>
 					</div>
 				</div>
 				<section>
-					<h3 className="mb2 primary-2">Residents</h3>
-					<div id="residents">{renderResidents()}</div>
+					<h3 className="mb2 primary-2">Island Residents</h3>
+					<ul id="residents" className="list">
+						{renderResidents()}
+					</ul>
 				</section>
 			</section>
 
