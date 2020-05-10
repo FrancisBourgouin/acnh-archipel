@@ -88,6 +88,14 @@ const App = () => {
                                     <Market />
                                 </Route>
                                 <Switch>
+                                    <Route path="/island/:id">
+                                        <Island />
+                                    </Route>
+                                </Switch>
+                                <Route exact path="/market/update">
+                                    <MarketUpdate />
+                                </Route>
+                                <Switch>
                                     <Route path="/island/:slug">
                                         <Island />
                                     </Route>
