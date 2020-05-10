@@ -10,22 +10,35 @@ export default (props) => {
 	const options = [];
 	for (const day in times) {
 		options.push(
-			<option key={times[day]} value={times[day]}>
+			<option key={times[day].getDay()} value={times[day]}>
 				{day}
 			</option>
 		);
 	}
 
-	const [day, setDay] = useState(defaultDateTime.day);
-	const [time, setTime] = useState(defaultDateTime.time);
+	const [date, setDay] = useState(defaultDateTime.date);
+	const [timeOfDay, setTimeOfDay] = useState(defaultDateTime.timeOfDay);
+	const [price, setprice] = useState(0);
+
 	return (
 		<section>
-			<form onSubmit={(event) => handleSubmit(event, { day, time })}>
-				<select onChange={(e) => setDay(e.target.value)}>{options}</select>
-				<select onChange={(e) => setTime(e.target.value)}>
+			<form onSubmit={(event) => handleSubmit(event, { date, timeOfDay, price })}>
+				<select
+					defaultValue={defaultDateTime.date}
+					required="required"
+					onChange={(e) => setDay(e.target.value)}
+				>
+					{options}
+				</select>
+				<select
+					defaultValue={defaultDateTime.timeOfDay}
+					required="required"
+					onChange={(e) => setTimeOfDay(e.target.value)}
+				>
 					<option value="am">AM</option>
 					<option value="pm">PM</option>
 				</select>
+				<input type="number" required="required" onChange={(e) => setprice(e.target.value)} />
 				<button type="submit">Submit Turnip Price</button>
 			</form>
 		</section>
