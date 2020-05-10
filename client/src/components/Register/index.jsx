@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useMutation, useQuery } from "urql";
@@ -6,6 +7,7 @@ import "../../styles/Registration.scss";
 import ArchipelagoForm from "./ArchipelagoForm";
 import IslanderForm from "./IslanderForm";
 import IslandForm from "./IslandForm";
+
 
 
 
@@ -59,6 +61,8 @@ export default (props) => {
 					const islandId = result.data.createIsland._id
 					return createIslander({ ...islander, islandId })
 				})
+				.then(() => Axios.post('/auth/login', { email: islander.email, password: islander.password }))
+				.then(res => props.setUser(res.data))
 				.then(() => history.push('/dashboard'))
 		} else {
 			createArchipelago(archipelago)
@@ -71,6 +75,8 @@ export default (props) => {
 					const islandId = result.data.createIsland._id
 					return createIslander({ ...islander, islandId })
 				})
+				.then(() => Axios.post('/auth/login', { email: islander.email, password: islander.password }))
+				.then(res => props.setUser(res.data))
 				.then(() => history.push('/dashboard'))
 
 		}
