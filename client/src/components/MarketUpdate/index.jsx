@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useMutation } from "urql";
+import { UserContext } from "../../hooks/UserContext";
 import TurnipForm from "./TurnipForm";
 
 const addTurnipPriceMutation = `
@@ -12,17 +13,23 @@ const addTurnipPriceMutation = `
 `;
 
 export default (props) => {
+	const userData = useContext(UserContext);
 	const [, addTurnipPrice] = useMutation(addTurnipPriceMutation);
 
 	const handleSubmit = async (event, enteredTurnipData) => {
 		event.preventDefault();
-		debugger;
 
 		function createTurnipPayload() {
+			const { date, timeOfDay, price } = enteredTurnipData;
+			const year = date.getFullYear();
+			const month = date.getMonth();
+			const day = date.getDate();
+			const time = timeOfDay === "am" ? 1 : 13;
+			const parsedDate = new Date(year, month, day, time);
 			return {
-				date: new Date(enteredTurnipData.date + " " + enteredTurnipData.time).toString(),
-				price: parseInt(enteredTurnipData.price),
-				islandId: "5ea33f01b7394d525ad37bb9",
+				date: parsedDate,
+				price: parseInt(price),
+				islandId: userData.islandId,
 			};
 		}
 
