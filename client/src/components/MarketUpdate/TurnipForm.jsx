@@ -18,11 +18,15 @@ export default (props) => {
 
 	const [date, setDay] = useState(defaultDateTime.date);
 	const [timeOfDay, setTimeOfDay] = useState(defaultDateTime.timeOfDay);
-	const [price, setprice] = useState(0);
+	const [price, setprice] = useState(undefined);
 
 	return (
 		<section>
-			<form onSubmit={(event) => handleSubmit(event, { date, timeOfDay, price })}>
+			<form
+				onSubmit={(event) => {
+					handleSubmit(event, { date, timeOfDay, price });
+				}}
+			>
 				<select
 					defaultValue={defaultDateTime.date}
 					required="required"

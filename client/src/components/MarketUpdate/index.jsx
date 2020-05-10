@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
 import { useMutation } from "urql";
+import { ArchipelagoContext } from "../../hooks/ArchipelagoContext";
 import { UserContext } from "../../hooks/UserContext";
+import "../../styles/Registration.scss";
 import TurnipForm from "./TurnipForm";
+import { createTurnipPayload, findIslandByIslandId } from "./UpdateTurnipSelectors";
 
 const addTurnipPriceMutation = `
     mutation($islandId: String!, $price: Int!, $date: String!){
@@ -14,32 +17,39 @@ const addTurnipPriceMutation = `
 
 export default (props) => {
 	const userData = useContext(UserContext);
+	const archipelagoData = useContext(ArchipelagoContext);
 	const [, addTurnipPrice] = useMutation(addTurnipPriceMutation);
+
+	const islandToUpdate = findIslandByIslandId(archipelagoData.islands, userData.islandId);
+	debugger;
+	const updateIslandPrices = (turnipPrice) => {
+		if (islandToUpdate) {
+			const updatedIslandData = archipelagoData.islands[islandToUpdate],
+				archipelagoDataClone = archipelagoData;
+
+			updatedIslandData.turnipPrices.push(turnipPrice);
+			archipelagoDataClone.islands.splice(islandToUpdate, 1, updatedIslandData);
+
+			props.setArchipelago(archipelagoDataClone);
+		} else {
+			console.log("Error adding turnip prices");
+		}
+	};
 
 	const handleSubmit = async (event, enteredTurnipData) => {
 		event.preventDefault();
-
-		function createTurnipPayload() {
-			const { date, timeOfDay, price } = enteredTurnipData;
-			const year = date.getFullYear();
-			const month = date.getMonth();
-			const day = date.getDate();
-			const time = timeOfDay === "am" ? 1 : 13;
-			const parsedDate = new Date(year, month, day, time);
-			return {
-				date: parsedDate,
-				price: parseInt(price),
-				islandId: userData.islandId,
-			};
+		const payload = createTurnipPayload(enteredTurnipData, userData.islandId);
+		try {
+			const response = await addTurnipPrice(payload);
+			updateIslandPrices(response.data.createTurnipPrice);
+		} catch (error) {
+			console.log("Error adding turnip prices", error);
 		}
-
-		const payload = createTurnipPayload();
-		await addTurnipPrice(payload);
 	};
 
 	return (
-		<section class="Form">
-			<h2>Updating prices on </h2>
+		<section className="Form">
+			<h2>Updating prices on {archipelagoData.islands[islandToUpdate].name}</h2>
 			<TurnipForm handleSubmit={handleSubmit} />
 		</section>
 	);
