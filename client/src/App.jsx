@@ -25,6 +25,8 @@ const client = createClient({
 const App = () => {
     const [user, setUser] = useState({});
     const [archipelago, setArchipelago] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
+
     const { islanderId } = user;
     const [archipelagoResult, archipelagoQuery] = useQuery({
         query: getArchipelagoByIslanderId,
@@ -33,6 +35,8 @@ const App = () => {
     });
 
     useEffect(() => {
+        setIsLoading(true);
+
         Axios.post("/auth/validation")
             .then((res) => setUser(res.data))
             .catch((err) => setUser({}));
@@ -53,6 +57,7 @@ const App = () => {
                 });
             });
             setArchipelago(fetchedArchipelagoResult);
+            setIsLoading(false);
         }
     }, [archipelagoResult]);
 
@@ -63,47 +68,51 @@ const App = () => {
                     <Router>
                         <div className="App">
                             <Header />
-                            <Switch>
-                                <Route exact path="/">
-                                    <Home />
-                                </Route>
-                                <Route exact path="/register">
-                                    <Register {...{ user, setUser }} />
-                                </Route>
-                                <Route exact path="/login">
-                                    <Login {...{ user, setUser }} />
-                                </Route>
-
-                                <Route exact path="/dashboard">
-                                    <Dashboard />
-                                </Route>
-
-                                <Route exact path="/profile">
-                                    <Profile />
-                                </Route>
-                                <Route exact path="/archipelago">
-                                    <Archipelago />
-                                </Route>
-                                <Route exact path="/market">
-                                    <Market />
-                                </Route>
+                            {!!isLoading ? (
+                                <h1>Loading...</h1>
+                            ) : (
                                 <Switch>
-                                    <Route path="/island/:id">
-                                        <Island />
+                                    <Route exact path="/">
+                                        <Home />
                                     </Route>
-                                </Switch>
-                                <Route exact path="/market/update">
-                                    <MarketUpdate />
-                                </Route>
-                                <Switch>
-                                    <Route path="/island/:slug">
-                                        <Island />
+                                    <Route exact path="/register">
+                                        <Register {...{ user, setUser }} />
                                     </Route>
-                                    <Route path="/passport/:slug">
+                                    <Route exact path="/login">
+                                        <Login {...{ user, setUser }} />
+                                    </Route>
+
+                                    <Route exact path="/dashboard">
+                                        <Dashboard />
+                                    </Route>
+
+                                    <Route exact path="/profile">
                                         <Profile />
                                     </Route>
+                                    <Route exact path="/archipelago">
+                                        <Archipelago />
+                                    </Route>
+                                    <Route exact path="/market">
+                                        <Market />
+                                    </Route>
+                                    <Switch>
+                                        <Route path="/island/:id">
+                                            <Island />
+                                        </Route>
+                                    </Switch>
+                                    <Route exact path="/market/update">
+                                        <MarketUpdate {...{ archipelago, setArchipelago }} />
+                                    </Route>
+                                    <Switch>
+                                        <Route path="/island/:slug">
+                                            <Island />
+                                        </Route>
+                                        <Route path="/passport/:slug">
+                                            <Profile />
+                                        </Route>
+                                    </Switch>
                                 </Switch>
-                            </Switch>
+                            )}
                         </div>
                     </Router>
                 </Provider>
