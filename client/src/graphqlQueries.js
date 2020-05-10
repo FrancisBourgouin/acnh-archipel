@@ -22,7 +22,7 @@ export const getArchipelagoByIslanderId = `
 			inviteCode
 		}
 	}
-`
+`;
 export const archipelagoSummaryByInviteCode = `
 	query($inviteCode: String!){
 		archipelago(inviteCode: $inviteCode) {
@@ -30,7 +30,7 @@ export const archipelagoSummaryByInviteCode = `
 			name
 		}
 	}
-`
+`;
 export const islanderByEmail = `
 query($email: String!){
   islander(email: $email) {
@@ -39,7 +39,7 @@ query($email: String!){
     email
   }
 }
-`
+`;
 export const createIslanderQuery = `
 	mutation($name: String!, $islandId: String!, $password: String!, $email: String!){
 		createIslander(name:$name, islandId:$islandId, password:$password, email:$email) {
