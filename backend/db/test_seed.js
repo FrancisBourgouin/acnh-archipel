@@ -23,9 +23,11 @@ const residents2 = ["Flora", "Fauna", "Ribbot"];
 const francisID = "00000457d3fe2a61141d63e0";
 const rikiID = "000008aed3fe2a61141d63e1";
 const corrinaID = "00000d05d3fe2a61141d63e2";
+
 const raftelID = "5ea22201b7394d525ad37bb9";
 const malosID = "5ea12f01b7234d525ad37bb9";
 const lolaID = "5ea33f01b7394d525ad37bb9";
+
 const unicornWarriorsID = "5ea33f81b7394d525ad37fe9";
 
 const islanderList = [
@@ -61,6 +63,7 @@ const islandList = [
     {
         _id: new ObjectID(raftelID),
         name: "Raftel",
+        slug: "raf-" + raftelID.slice(0, 4),
         nativeFruit: "Peaches",
         islanders: [new ObjectID(francisID)],
         residents: residents,
@@ -70,6 +73,7 @@ const islandList = [
     {
         _id: new ObjectID(malosID),
         name: "Malos",
+        slug: "mal-" + malosID.slice(0, 4),
         nativeFruit: "Apples",
         islanders: [new ObjectID(rikiID)],
         residents: residents1,
@@ -79,6 +83,7 @@ const islandList = [
     {
         _id: new ObjectID(lolaID),
         name: "Isla Lola",
+        slug: "isl-" + lolaID.slice(0, 4),
         nativeFruit: "Oranges",
         islanders: [new ObjectID(corrinaID)],
         residents: residents2,

@@ -5,6 +5,7 @@ export const getArchipelagoByIslanderId = `
 			islands {
 				_id
 				name
+				slug
 				nativeFruit
 				turnipPrices {
 					date
