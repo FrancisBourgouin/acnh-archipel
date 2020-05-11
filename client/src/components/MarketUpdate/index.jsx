@@ -21,7 +21,6 @@ export default (props) => {
 	const [, addTurnipPrice] = useMutation(addTurnipPriceMutation);
 
 	const islandToUpdate = findIslandByIslandId(archipelagoData.islands, userData.islandId);
-	debugger;
 	const updateIslandPrices = (turnipPrice) => {
 		if (islandToUpdate) {
 			const updatedIslandData = archipelagoData.islands[islandToUpdate],

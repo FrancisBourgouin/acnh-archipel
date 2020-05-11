@@ -11,7 +11,6 @@ export function getDays() {
 		saturday: new Date(),
 	};
 
-	//0 Sunday
 	times.sunday.setDate(now.getDate() - now.getDay());
 	let incrementor = 1;
 	for (const day in times) {

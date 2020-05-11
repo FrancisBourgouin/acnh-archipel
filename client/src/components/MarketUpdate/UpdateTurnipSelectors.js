@@ -3,7 +3,7 @@ export function createTurnipPayload(enteredTurnipData, islandId) {
 	const year = date.getFullYear();
 	const month = date.getMonth();
 	const day = date.getDate();
-	const time = timeOfDay === "am" ? 1 : 13;
+	const time = timeOfDay === "am" ? 0 : 12;
 	const parsedDate = new Date(year, month, day, time);
 	return {
 		date: parsedDate,
