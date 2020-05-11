@@ -35,7 +35,7 @@ export default () => {
                         <div className="mb2 flex justify-between">
                             <div className="mr3 primary-2 nowrap">Home Island</div>
                             <Link
-                                to="/island/0"
+                                to={`/island/${islandInfo?.slug}`}
                                 id="island-name"
                                 className="flex link primary-1 hover-primary-2 nowrap"
                             >

@@ -17,12 +17,12 @@ const Market = () => {
         },
     ];
 
-    const getCurrentPrice = (island) => island.turnipPrices[island.turnipPrices.length - 1].price;
-    const getLastPrice = (island) => island.turnipPrices[island.turnipPrices.length - 2].price;
+    const getCurrentPrice = (island) => island.turnipPrices[island.turnipPrices.length - 1]?.price;
+    const getLastPrice = (island) => island.turnipPrices[island.turnipPrices.length - 2]?.price;
     const getPriceDifference = (island) => getLastPrice(island) - getCurrentPrice(island);
 
     const sortIslandsByPrice = (islands) =>
-        islands.sort((a, b) => getCurrentPrice(b).price - getCurrentPrice(a).price);
+        islands.sort((a, b) => getCurrentPrice(b)?.price - getCurrentPrice(a)?.price);
 
     const getTrendSize = (expectedTrend) => {
         return expectedTrend.includes("Large") ? "large" : "small";
@@ -126,11 +126,6 @@ const Market = () => {
                     <h2 className="mb3 secondary-1">Fresh Prices</h2>
                     {renderIslandCards()}
                 </div>
-
-                {/* <div id="stale-cards" className="mt5">
-                    <h2 className="mb3 secondary-1">Stale Prices</h2>
-                    {renderIslandCards(true)}
-                </div> */}
             </section>
 
             <section></section>

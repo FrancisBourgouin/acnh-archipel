@@ -54,9 +54,9 @@ const Island = ({}) => {
                 </div>
             );
     };
+
     if (!archipelagoData?.islands) return <div></div>;
 
-    console.log(getIslandBySlug());
     return (
         <main id="island" className="ma4 pt3">
             <section className="card flex-column">
