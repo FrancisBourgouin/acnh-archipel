@@ -8,10 +8,23 @@ export default (db) => {
     auth.post("/validation", (req, res, next) => {
         findUserById(req.session.userId)
             .then((user) => {
-                const { name, email, _id, avatarImage, recipes } = user;
+                const {
+                    name,
+                    email,
+                    slug,
+                    _id,
+                    avatarImage,
+                    friendCode,
+                    designerCode,
+                    recipes,
+                } = user;
+                console.log(user);
                 res.json({
                     name,
                     email,
+                    slug,
+                    friendCode,
+                    designerCode,
                     islanderId: _id,
                     avatarImage,
                     recipes,
@@ -24,7 +37,6 @@ export default (db) => {
         validateUser(req.body.email, req.body.password)
             .then((user) => {
                 console.log("User validated...");
-                console.log(user);
                 req.session.userId = user._id;
                 const { name, email, _id, avatarImage, recipes } = user;
                 res.json({

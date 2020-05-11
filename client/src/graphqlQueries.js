@@ -2,6 +2,7 @@ export const getArchipelagoByIslanderId = `
 	query($islanderId: String!){
 		archipelago(islanderId: $islanderId) {
 			name
+			slug
 			islands {
 				_id
 				name
@@ -14,6 +15,9 @@ export const getArchipelagoByIslanderId = `
 				islanders {
 					_id
 					name
+					slug
+					friendCode
+					designerCode
 					avatarImage
 					recipes
 				}

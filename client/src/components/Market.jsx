@@ -29,6 +29,7 @@ const Market = () => {
     };
 
     const getPriceIcon = (currentPrice) => {
+        if (!currentPrice) return "price-neutral";
         return currentPrice > 180
             ? "price-positive"
             : currentPrice > 115
@@ -37,6 +38,7 @@ const Market = () => {
     };
 
     const getChangeIcon = (rateOfChange) => {
+        if (!rateOfChange) return "price-neutral";
         return rateOfChange > 40
             ? "change-big-up"
             : rateOfChange > 0
@@ -69,7 +71,8 @@ const Market = () => {
                         </div>
                     </div>
                 )) ||
-                    expectedTrend}
+                    expectedTrend ||
+                    "Trend unknown"}
             </div>
         );
     };
@@ -78,7 +81,7 @@ const Market = () => {
         return (
             <div className="primary-label mb3">
                 <i className={`icon ${getPriceIcon(currentPrice)}`}></i>
-                {currentPrice} bells
+                {currentPrice ? `${currentPrice} bells` : "---"}
             </div>
         );
     };
@@ -87,7 +90,13 @@ const Market = () => {
         return (
             <div className="primary-label">
                 <i className={`icon ${getChangeIcon(rateOfChange)}`}></i>
-                <span className="f6">{rateOfChange}</span> bells
+                {rateOfChange ? (
+                    <>
+                        <span className="f6">{rateOfChange}</span> bells
+                    </>
+                ) : (
+                    "---"
+                )}
             </div>
         );
     };

@@ -22,8 +22,11 @@ export default (db) => {
             .compare(password, user ? user.password : null)
             .then((isValidated) => {
                 if (isValidated) return user;
-                if (user) console.log("Bad password");
-                else console.log("No user found");
+                if (user) {
+                    // FIXME: matching passwords don't work - is it because of seed?
+                    console.log("Bad password");
+                    // return user; // uncomment to allow login - ignores password check
+                } else console.log("No user found");
 
                 console.log("Failed to validate");
                 return null;

@@ -7,9 +7,13 @@ export default (db) => {
     const islanders = db.collection("islanders");
     const salt = bcrypt.genSaltSync(10);
 
+    const getRandomSlugTag = () => Math.random().toString(36).substring(4);
+
     const createArchipelago = async ({ name }) => {
+        const slug = name.slice(0, 3) + "-" + getRandomSlugTag();
         const archipelagoInfo = {
             _id: new ObjectID(),
+            slug,
             name,
             friendsOnly: true,
             inviteCode: "",
@@ -21,8 +25,7 @@ export default (db) => {
         return archipelagoInfo;
     };
     const createIsland = async ({ name, nativeFruit, archipelagoId }) => {
-        const slug =
-            name.slice(0, 3) + "-" + Math.random().toString(36).substring(4);
+        const slug = name.slice(0, 3) + "-" + getRandomSlugTag();
         const islandInfo = {
             _id: new ObjectID(),
             name,
@@ -49,11 +52,12 @@ export default (db) => {
         email,
         avatarImage,
     }) => {
-        const _id = new ObjectID.createFromHexString(islandId);
+        const slug = name.slice(0, 4) + "-" + getRandomSlugTag();
         const hashedPassword = await bcrypt.hash(password, salt);
         const islanderInfo = {
             _id: new ObjectID(),
             name,
+            slug,
             password: hashedPassword,
             email,
             avatarImage,
@@ -62,7 +66,7 @@ export default (db) => {
         const newIslander = await islanders.insertOne(islanderInfo);
 
         await islands.updateOne(
-            { _id },
+            { _id: new ObjectID.createFromHexString(islandId) },
             { $push: { islanders: newIslander.insertedId } }
         );
 

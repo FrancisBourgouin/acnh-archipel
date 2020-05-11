@@ -91,6 +91,9 @@ const App = () => {
                                     <Route path="/island/:slug">
                                         <Island />
                                     </Route>
+                                    <Route path="/passport/:slug">
+                                        <Profile />
+                                    </Route>
                                 </Switch>
                             </Switch>
                         </div>

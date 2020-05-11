@@ -17,7 +17,7 @@ const Island = ({}) => {
         return getIslandBySlug()?.islanders?.map((islander, i) => {
             return (
                 <li>
-                    <Link className="link" to="/profile">
+                    <Link className="link" to={`/passport/${islander.slug}`}>
                         <div className="flex items-center primary-1 pv2" key={`resident-${i}`}>
                             {renderResidentAvatar(islander)}
                             {islander.name}

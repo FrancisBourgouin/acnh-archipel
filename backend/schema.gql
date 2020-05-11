@@ -5,6 +5,7 @@ type Archipelago {
 
   _id: String
   name: String
+  slug: String
   islands: [Island]
   friendsOnly: Boolean
   inviteCode: String
@@ -28,7 +29,10 @@ Islander info ( id, name), searchable by islanderId
 type Islander {
   _id: String
   name: String
+  slug: String
   email: String
+  friendCode: String
+  designerCode: String
   avatarImage: String
   recipes: [String]
 }
