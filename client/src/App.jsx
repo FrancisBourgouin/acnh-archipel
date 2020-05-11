@@ -36,10 +36,12 @@ const App = () => {
 
     useEffect(() => {
         setIsLoading(true);
-
         Axios.post("/auth/validation")
             .then((res) => setUser(res.data))
-            .catch((err) => setUser({}));
+            .catch((err) => {
+                setUser({});
+                setIsLoading(false);
+            });
     }, []);
 
     useEffect(() => {
