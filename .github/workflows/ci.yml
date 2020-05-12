@@ -4,37 +4,48 @@
 name: CI
 
 on:
-  push:
+  pull-request:
     branches: [master]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  # build:
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x]
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: bahmutov/npm-install@v1
-        with:
-          working-directory: |
-            ./backend
-      - name: Test backend
-        working-directory: ./backend
-        run: |
-          yarn test
-        env:
-          CI: true
-      - name: Add remote origin
-        working-directory: ./backend
-        run: |
-          git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-      - name: Deploy to Heroku
-        run: |
-          git push heroku HEAD:master -f
+  steps:
+      - name: Connect to Digital Ocean Droplet w/ SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.ACNHA_HOST }}
+        username: ${{ secrets.ACNHA_USERNAME }}
+        password: ${{ secrets.ACNHA_PASSWORD }}
+        port: ${{ secrets.ACNHA_PORT }}
+        script: ./github-actions-script.sh
+    # steps:
+    #   - uses: actions/checkout@v2
+    #   - name: Use Node.js ${{ matrix.node-version }}
+    #     uses: actions/setup-node@v1
+    #     with:
+    #       node-version: ${{ matrix.node-version }}
+    #   - uses: bahmutov/npm-install@v1
+    #     with:
+    #       working-directory: |
+    #         ./backend
+    #   - name: Test backend
+    #     working-directory: ./backend
+    #     run: |
+    #       yarn test
+    #     env:
+    #       CI: true
+    #   - name: Add remote origin
+    #     working-directory: ./backend
+    #     run: |
+    #       git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+    #   - name: Deploy to Heroku
+    #     run: |
+    #       git push heroku HEAD:master -f
+
+    
