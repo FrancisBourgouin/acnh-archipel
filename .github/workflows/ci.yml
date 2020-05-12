@@ -9,22 +9,17 @@ on:
       - master
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [12.x]
-
-  steps:
-    - name: Connect to Digital Ocean Droplet with SSH
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.ACNHA_HOST }}
-        username: ${{ secrets.ACNHA_USERNAME }}
-        password: ${{ secrets.ACNHA_PASSWORD }}
-        port: ${{ secrets.ACNHA_PORT }}
-        script: ./github-actions-script.sh
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Connect to Digital Ocean Droplet with SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.ACNHA_HOST }}
+          username: ${{ secrets.ACNHA_USERNAME }}
+          password: ${{ secrets.ACNHA_PASSWORD }}
+          port: ${{ secrets.ACNHA_PORT }}
+          script: ./github-actions-script.sh
     # steps:
     #   - uses: actions/checkout@v2
     #   - name: Use Node.js ${{ matrix.node-version }}
