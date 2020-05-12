@@ -17,7 +17,7 @@ jobs:
   #       node-version: [12.x]
 
   steps:
-      - name: Connect to Digital Ocean Droplet w/ SSH
+    - name: Connect to Digital Ocean Droplet with SSH
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.ACNHA_HOST }}
