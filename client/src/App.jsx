@@ -10,6 +10,7 @@ import {
     Island,
     Login,
     Market,
+    MarketUpdate,
     Profile,
     Register,
 } from "./components";
@@ -97,14 +98,10 @@ const App = () => {
                                     <Route exact path="/market">
                                         <Market />
                                     </Route>
-                                    <Switch>
-                                        <Route path="/island/:id">
-                                            <Island />
-                                        </Route>
-                                    </Switch>
                                     <Route exact path="/market/update">
                                         <MarketUpdate {...{ archipelago, setArchipelago }} />
                                     </Route>
+
                                     <Switch>
                                         <Route path="/island/:slug">
                                             <Island />
