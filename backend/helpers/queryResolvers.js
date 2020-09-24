@@ -1,5 +1,5 @@
 import { ObjectID } from "mongodb";
-
+// WHATS UP LISA
 export default (db) => {
     const archipelagos = db.collection("archipelagos");
     const islands = db.collection("islands");
@@ -105,6 +105,10 @@ export default (db) => {
             .toArray();
         return result[0];
     };
+
+
+    // ARCHIPELAGO STUFF
+
 
     const fetchArchipelagos = async () => {
         const result = await archipelagos
