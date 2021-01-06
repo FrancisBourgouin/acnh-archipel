@@ -11,7 +11,7 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/react-hooks": "^3.2.1",
         "@testing-library/user-event": "^7.1.2",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "chart.js": "^2.9.3",
         "gql-tag": "^1.0.1",
         "graphql": "^15.0.0",
